@@ -8,424 +8,146 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg: #faf8f4;
-  --bg2: #f3f0e8;
-  --bg3: #ebe6d8;
-  --card: #ffffff;
-  --border: #e2ddd0;
-  --border2: #ccc6b4;
-  --ink: #1a1612;
-  --ink2: #4a4540;
-  --ink3: #7a7268;
-  --accent: #c0392b;
-  --accent2: #922b21;
-  --gold: #c9882a;
-  --gold2: #a86d1a;
-  --blue: #1a4a7a;
-  --blue2: #153c63;
-  --green: #1e6641;
-  --purple: #5b2d8e;
-  --tag-politique: #c0392b;
-  --tag-droit: #1a4a7a;
-  --tag-histoire: #c9882a;
-  --tag-culture: #1e6641;
-  --tag-economie: #5b2d8e;
-  --tag-philosophie: #2c7873;
-  --tag-sciences: #c06030;
+  --bg:#faf8f4; --bg2:#f3f0e8; --bg3:#ebe6d8;
+  --card:#ffffff; --border:#e2ddd0; --border2:#ccc6b4;
+  --ink:#1a1612; --ink2:#4a4540; --ink3:#7a7268;
+  --accent:#c0392b; --gold:#c9882a; --gold2:#a86d1a;
+  --blue:#1a4a7a; --green:#1e6641; --purple:#5b2d8e; --teal:#2c7873;
 }
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  opacity:0.6;}
+.app{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:0 24px 80px;}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+/* HEADER */
+header{padding:48px 0 32px;border-bottom:2px solid var(--ink);margin-bottom:36px;}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.logo{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;color:var(--ink);letter-spacing:-2px;}
+.logo span{color:var(--accent);}
+.logo-tagline{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-top:6px;}
+.credit-badge{display:flex;flex-direction:column;align-items:flex-end;gap:5px;margin-top:8px;flex-shrink:0;}
+.credit-line{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;}
+.credit-names{display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);padding:7px 14px;border-radius:2px;}
+.credit-name{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
+.credit-x{color:var(--accent);font-size:11px;font-weight:700;}
+.credit-year{font-family:'DM Mono',monospace;font-size:9px;color:var(--ink3);letter-spacing:1px;}
+.header-desc{font-size:14px;color:var(--ink3);font-style:italic;border-left:3px solid var(--accent);padding-left:14px;line-height:1.7;}
 
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-  line-height: 1.6;
-}
+/* DOMAIN PILLS */
+.domains{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 20px;}
+.domain-pill{display:inline-flex;align-items:center;gap:6px;border-radius:2px;padding:7px 12px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;border:1.5px solid;transition:all 0.15s;background:transparent;}
+.domain-pill:hover{transform:translateY(-1px);}
+.dp-all{border-color:var(--ink);color:var(--ink);}
+.dp-all.on{background:var(--ink);color:var(--bg);}
+.dp-politique{border-color:#c0392b;color:#c0392b;}
+.dp-politique.on{background:#c0392b;color:#fff;}
+.dp-droit{border-color:var(--blue);color:var(--blue);}
+.dp-droit.on{background:var(--blue);color:#fff;}
+.dp-histoire{border-color:var(--gold);color:var(--gold);}
+.dp-histoire.on{background:var(--gold);color:#fff;}
+.dp-culture{border-color:var(--green);color:var(--green);}
+.dp-culture.on{background:var(--green);color:#fff;}
+.dp-economie{border-color:var(--purple);color:var(--purple);}
+.dp-economie.on{background:var(--purple);color:#fff;}
+.dp-philosophie{border-color:var(--teal);color:var(--teal);}
+.dp-philosophie.on{background:var(--teal);color:#fff;}
 
-/* ── TEXTURE OVERLAY ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-  opacity: 0.6;
-}
+/* SEARCH */
+.search-wrap{position:relative;margin-bottom:10px;}
+.search-input{width:100%;background:var(--card);border:2px solid var(--border2);border-radius:4px;padding:18px 135px 18px 20px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;color:var(--ink);outline:none;transition:border-color 0.15s,box-shadow 0.15s;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.search-input:focus{border-color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+.search-input::placeholder{color:var(--ink3);font-style:italic;}
+.search-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--ink);color:var(--bg);border:none;border-radius:3px;padding:10px 20px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.search-btn:hover{background:var(--accent);}
+.search-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.search-hint{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:1px;margin-bottom:28px;}
+.search-hint strong{color:var(--ink2);}
 
-.app { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 0 24px 80px; }
+/* SUGGESTIONS */
+.sugg-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px;}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;}
+.sugg-btn{background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:7px 13px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink2);cursor:pointer;transition:all 0.15s;}
+.sugg-btn:hover{background:var(--card);border-color:var(--ink);color:var(--ink);transform:translateY(-1px);}
 
-/* ── HEADER ── */
-header {
-  padding: 48px 0 36px;
-  border-bottom: 2px solid var(--ink);
-  margin-bottom: 40px;
-  position: relative;
-}
-.header-top {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 8px;
-}
-.logo-wrap {}
-.logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 64px; font-weight: 900; line-height: 1;
-  color: var(--ink); letter-spacing: -2px;
-}
-.logo span { color: var(--accent); }
-.logo-tagline {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 3px; color: var(--ink3);
-  text-transform: uppercase; margin-top: 6px;
-}
-.credit-badge {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
-  margin-top: 8px;
-}
-.credit-line {
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  letter-spacing: 2px; color: var(--ink3); text-transform: uppercase;
-}
-.credit-names {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--ink); color: var(--bg);
-  padding: 6px 14px; border-radius: 2px;
-}
-.credit-name {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-}
-.credit-x { color: var(--accent); font-size: 11px; font-weight: 700; }
+/* LOADING */
+.loading-wrap{text-align:center;padding:60px 20px;}
+.loading-spinner{width:40px;height:40px;border:2px solid var(--border2);border-top-color:var(--ink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 20px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-text{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--ink3);}
+.loading-sub{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--ink3);margin-top:8px;}
 
-.header-desc {
-  font-size: 14px; color: var(--ink3); font-style: italic;
-  border-left: 3px solid var(--accent);
-  padding-left: 14px; margin-top: 16px;
-  line-height: 1.7;
-}
-
-/* ── DOMAIN PILLS ── */
-.domains {
-  display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 20px;
-}
-.domain-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  border-radius: 2px; padding: 6px 12px; cursor: pointer;
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
-  border: 1.5px solid; transition: all 0.15s;
-}
-.domain-pill:hover { transform: translateY(-1px); }
-.dp-all { border-color: var(--ink); color: var(--ink); background: transparent; }
-.dp-all.active { background: var(--ink); color: var(--bg); }
-.dp-politique { border-color: var(--tag-politique); color: var(--tag-politique); background: transparent; }
-.dp-politique.active { background: var(--tag-politique); color: #fff; }
-.dp-droit { border-color: var(--tag-droit); color: var(--tag-droit); background: transparent; }
-.dp-droit.active { background: var(--tag-droit); color: #fff; }
-.dp-histoire { border-color: var(--tag-histoire); color: var(--tag-histoire); background: transparent; }
-.dp-histoire.active { background: var(--tag-histoire); color: #fff; }
-.dp-culture { border-color: var(--tag-culture); color: var(--tag-culture); background: transparent; }
-.dp-culture.active { background: var(--tag-culture); color: #fff; }
-.dp-economie { border-color: var(--tag-economie); color: var(--tag-economie); background: transparent; }
-.dp-economie.active { background: var(--tag-economie); color: #fff; }
-.dp-philosophie { border-color: var(--tag-philosophie); color: var(--tag-philosophie); background: transparent; }
-.dp-philosophie.active { background: var(--tag-philosophie); color: #fff; }
-
-/* ── SEARCH BOX ── */
-.search-wrap {
-  position: relative; margin-bottom: 12px;
-}
-.search-input {
-  width: 100%;
-  background: var(--card);
-  border: 2px solid var(--border2);
-  border-radius: 4px;
-  padding: 18px 120px 18px 20px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 16px; font-weight: 500;
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.search-input:focus {
-  border-color: var(--ink);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
-.search-input::placeholder { color: var(--ink3); font-style: italic; }
-.search-btn {
-  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
-  background: var(--ink); color: var(--bg);
-  border: none; border-radius: 3px;
-  padding: 10px 18px;
-  font-family: 'DM Mono', monospace; font-size: 11px;
-  font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-  cursor: pointer; transition: all 0.15s;
-}
-.search-btn:hover { background: var(--accent); }
-.search-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.search-hint {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  color: var(--ink3); letter-spacing: 1px;
-  margin-bottom: 28px;
-}
-.search-hint strong { color: var(--ink2); }
-
-/* ── QUICK SUGGESTIONS ── */
-.suggestions-title {
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  letter-spacing: 3px; color: var(--ink3); text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.suggestions {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px;
-}
-.sugg-btn {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 2px; padding: 7px 13px;
-  font-family: 'DM Sans', sans-serif; font-size: 12px;
-  color: var(--ink2); cursor: pointer;
-  transition: all 0.15s;
-}
-.sugg-btn:hover { background: var(--card); border-color: var(--ink); color: var(--ink); transform: translateY(-1px); }
-
-/* ── LOADING ── */
-.loading-wrap {
-  text-align: center; padding: 60px 20px;
-}
-.loading-spinner {
-  width: 40px; height: 40px;
-  border: 2px solid var(--border2);
-  border-top-color: var(--ink);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 20px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px; font-style: italic; color: var(--ink3);
-}
-.loading-sub {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 2px; color: var(--ink3); margin-top: 8px;
-}
-
-/* ── RESULT CARD ── */
-.result-card {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 28px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  animation: fadeUp 0.4s ease;
-}
-@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-
-/* CARD HEADER */
-.rc-head {
-  padding: 28px 32px 20px;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.rc-domain-tag {
-  display: inline-block;
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 2px; margin-bottom: 12px;
-  color: #fff;
-}
-.rc-term {
-  font-family: 'Playfair Display', serif;
-  font-size: 40px; font-weight: 900; line-height: 1.1;
-  color: var(--ink); letter-spacing: -1px;
-  margin-bottom: 6px;
-}
-.rc-pronunciation {
-  font-family: 'DM Mono', monospace; font-size: 11px;
-  color: var(--ink3); letter-spacing: 1px; font-style: italic;
-  margin-bottom: 4px;
-}
-.rc-origin {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  color: var(--ink3); letter-spacing: 1px;
-}
-
-/* SECTIONS */
-.rc-section {
-  padding: 24px 32px;
-  border-bottom: 1px solid var(--border);
-}
-.rc-section:last-child { border-bottom: none; }
-
-.section-label {
-  display: flex; align-items: center; gap: 10px;
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--ink3); margin-bottom: 14px;
-}
-.section-label::after {
-  content: ''; flex: 1; height: 1px; background: var(--border);
-}
-.section-icon { font-size: 14px; }
-
-/* SIMPLE DEFINITION */
-.simple-def {
-  font-size: 18px; font-weight: 600; color: var(--ink);
-  line-height: 1.6; border-left: 4px solid var(--accent);
-  padding-left: 18px;
-}
-
-/* EXPLANATION */
-.explanation {
-  font-size: 14px; color: var(--ink2); line-height: 1.85;
-}
-.explanation p { margin-bottom: 12px; }
-.explanation p:last-child { margin-bottom: 0; }
-
-/* HISTORICAL CONTEXT */
-.history-block {
-  background: var(--bg2); border-radius: 3px;
-  padding: 18px 20px; position: relative; overflow: hidden;
-}
-.history-block::before {
-  content: '"';
-  font-family: 'Playfair Display', serif;
-  font-size: 120px; color: var(--border); line-height: 1;
-  position: absolute; top: -20px; left: 10px;
-  pointer-events: none;
-}
-.history-text {
-  font-size: 14px; color: var(--ink2); line-height: 1.85;
-  position: relative; z-index: 1;
-}
-.history-date {
-  display: inline-block; font-family: 'DM Mono', monospace;
-  font-size: 10px; font-weight: 500; letter-spacing: 2px;
-  background: var(--ink); color: var(--bg);
-  padding: 2px 8px; border-radius: 2px; margin-bottom: 10px;
-}
-
-/* EXAMPLE BLOCK */
-.example-block {
-  border: 1.5px solid var(--border2); border-radius: 3px;
-  overflow: hidden;
-}
-.example-label {
-  background: var(--bg2); padding: 8px 16px;
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  font-weight: 500; letter-spacing: 3px; color: var(--ink3);
-  text-transform: uppercase; border-bottom: 1px solid var(--border);
-}
-.example-text {
-  padding: 16px 18px; font-size: 14px;
-  color: var(--ink2); line-height: 1.8; font-style: italic;
-}
-.example-breakdown {
-  padding: 14px 18px; background: var(--bg);
-  border-top: 1px solid var(--border);
-  font-size: 13px; color: var(--ink3); line-height: 1.7;
-}
-
-/* KEY POINTS */
-.key-points { display: flex; flex-direction: column; gap: 10px; }
-.key-point {
-  display: flex; gap: 14px; align-items: flex-start;
-}
-.kp-num {
-  font-family: 'Playfair Display', serif; font-size: 24px;
-  font-weight: 700; color: var(--border2); line-height: 1;
-  flex-shrink: 0; margin-top: -2px;
-}
-.kp-text { font-size: 14px; color: var(--ink2); line-height: 1.7; }
-.kp-text strong { color: var(--ink); }
-
-/* ANALOGIE */
-.analogy-block {
-  background: linear-gradient(135deg, var(--bg2), var(--bg));
-  border-radius: 3px; padding: 18px 20px;
-  border-left: 4px solid var(--gold);
-}
-.analogy-intro {
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  letter-spacing: 2px; color: var(--gold2); text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.analogy-text {
-  font-size: 14px; color: var(--ink2); line-height: 1.8;
-}
-
-/* QUOTE */
-.quote-block {
-  border-left: 4px solid var(--ink3);
-  padding-left: 18px;
-}
-.quote-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px; font-style: italic; color: var(--ink2);
-  line-height: 1.7; margin-bottom: 8px;
-}
-.quote-author {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 1px; color: var(--ink3); text-transform: uppercase;
-}
-
-/* HISTORY */
-.search-history {
-  margin-top: 40px; padding-top: 28px;
-  border-top: 1px solid var(--border);
-}
-.history-title {
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  letter-spacing: 3px; color: var(--ink3); text-transform: uppercase;
-  margin-bottom: 14px;
-}
-.history-items { display: flex; flex-wrap: wrap; gap: 8px; }
-.history-item {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 2px; padding: 6px 12px;
-  font-size: 12px; color: var(--ink2); cursor: pointer;
-  transition: all 0.15s; display: flex; align-items: center; gap: 6px;
-}
-.history-item:hover { background: var(--card); border-color: var(--ink); }
-.history-dot { width: 6px; height: 6px; border-radius: 50%; }
-
-/* EMPTY STATE */
-.empty-state { text-align: center; padding: 60px 20px; }
-.empty-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px; font-style: italic; color: var(--ink3);
-  margin-bottom: 10px;
-}
-.empty-sub {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 2px; color: var(--ink3); text-transform: uppercase;
-}
+/* RESULT CARD */
+.result-card{background:var(--card);border:1px solid var(--border2);border-radius:4px;overflow:hidden;margin-bottom:28px;box-shadow:0 4px 20px rgba(0,0,0,0.06);animation:fadeUp 0.4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.rc-head{padding:28px 32px 20px;border-bottom:1px solid var(--border);}
+.rc-domain-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:12px;color:#fff;}
+.rc-term{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;line-height:1.1;color:var(--ink);letter-spacing:-1px;margin-bottom:6px;}
+.rc-pronunciation{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:1px;font-style:italic;margin-bottom:4px;}
+.rc-origin{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:1px;}
+.rc-section{padding:22px 32px;border-bottom:1px solid var(--border);}
+.rc-section:last-child{border-bottom:none;}
+.section-label{display:flex;align-items:center;gap:10px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.simple-def{font-size:18px;font-weight:600;color:var(--ink);line-height:1.6;border-left:4px solid var(--accent);padding-left:18px;}
+.explanation{font-size:14px;color:var(--ink2);line-height:1.85;}
+.explanation p{margin-bottom:10px;}
+.explanation p:last-child{margin-bottom:0;}
+.analogy-block{background:var(--bg2);border-radius:3px;padding:18px 20px;border-left:4px solid var(--gold);}
+.analogy-intro{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);text-transform:uppercase;margin-bottom:10px;}
+.analogy-text{font-size:14px;color:var(--ink2);line-height:1.8;}
+.history-block{background:var(--bg2);border-radius:3px;padding:18px 20px;position:relative;overflow:hidden;}
+.history-block::before{content:'"';font-family:'Playfair Display',serif;font-size:120px;color:var(--border);line-height:1;position:absolute;top:-20px;left:10px;pointer-events:none;}
+.history-date{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:2px;background:var(--ink);color:var(--bg);padding:2px 8px;border-radius:2px;margin-bottom:10px;}
+.history-text{font-size:14px;color:var(--ink2);line-height:1.85;position:relative;z-index:1;}
+.key-points{display:flex;flex-direction:column;gap:12px;}
+.key-point{display:flex;gap:14px;align-items:flex-start;}
+.kp-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--border2);line-height:1;flex-shrink:0;margin-top:-3px;}
+.kp-text{font-size:14px;color:var(--ink2);line-height:1.7;}
+.example-block{border:1.5px solid var(--border2);border-radius:3px;overflow:hidden;}
+.example-label{background:var(--bg2);padding:8px 16px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;border-bottom:1px solid var(--border);}
+.example-text{padding:16px 18px;font-size:14px;color:var(--ink2);line-height:1.8;font-style:italic;}
+.example-breakdown{padding:14px 18px;background:var(--bg);border-top:1px solid var(--border);font-size:13px;color:var(--ink3);line-height:1.7;}
+.quote-block{border-left:4px solid var(--ink3);padding-left:18px;}
+.quote-text{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--ink2);line-height:1.7;margin-bottom:8px;}
+.quote-author{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--ink3);text-transform:uppercase;}
+.asavoir-text{font-size:14px;color:var(--ink2);line-height:1.7;}
 
 /* ERROR */
-.error-block {
-  background: #fff5f5; border: 1px solid #fca5a5;
-  border-radius: 4px; padding: 20px 24px;
-  font-size: 14px; color: #991b1b; line-height: 1.7;
-}
+.error-block{background:#fff5f5;border:1px solid #fca5a5;border-radius:4px;padding:20px 24px;font-size:14px;color:#991b1b;line-height:1.7;}
+.error-block code{font-family:'DM Mono',monospace;font-size:11px;opacity:0.6;display:block;margin-top:8px;}
+
+/* HISTORY */
+.history-section{margin-top:40px;padding-top:28px;border-top:1px solid var(--border);}
+.history-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;}
+.history-items{display:flex;flex-wrap:wrap;gap:8px;}
+.history-chip{background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:6px 12px;font-size:12px;color:var(--ink2);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:7px;}
+.history-chip:hover{background:var(--card);border-color:var(--ink);}
+.history-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 20px;}
+.empty-title{font-family:'Playfair Display',serif;font-size:28px;font-style:italic;color:var(--ink3);margin-bottom:10px;}
+.empty-sub{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;}
 
 @media(max-width:600px){
   .logo{font-size:44px;}
   .rc-term{font-size:28px;}
-  .rc-section{padding:18px 20px;}
-  .rc-head{padding:20px 20px 16px;}
+  .rc-section,.rc-head{padding:18px 20px;}
   .simple-def{font-size:15px;}
+  .header-top{flex-direction:column;gap:14px;}
+  .credit-badge{align-items:flex-start;}
 }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- HEADER -->
   <header>
     <div class="header-top">
-      <div class="logo-wrap">
+      <div>
         <div class="logo">DE<span>CODE</span></div>
         <div class="logo-tagline">Traducteur de concepts complexes</div>
       </div>
@@ -435,44 +157,36 @@ header {
           <span class="credit-name">KAYSSAR ZOUARI</span>
           <span class="credit-x">✕</span>
           <span class="credit-name">CLAUDE AI</span>
-          <span class="credit-sep" style="color:var(--ink3);font-size:10px;font-family:'DM Mono',monospace;">· 2026</span>
         </div>
+        <div class="credit-year">· 2026</div>
       </div>
     </div>
     <div class="header-desc">
-      Entre un mot compliqué, un concept politique, juridique, historique ou culturel — et reçois une explication claire, un contexte historique, et un exemple concret pour vraiment comprendre.
+      Entre un mot compliqué, un concept politique, juridique, historique ou culturel — et reçois une explication claire, un contexte historique et un exemple concret pour vraiment comprendre.
     </div>
   </header>
 
-  <!-- DOMAINS -->
   <div class="domains" id="domains">
-    <button class="domain-pill dp-all active" data-domain="all" onclick="setDomain(this,'all')">🌐 Tous</button>
-    <button class="domain-pill dp-politique" data-domain="politique" onclick="setDomain(this,'politique')">⚖️ Politique</button>
-    <button class="domain-pill dp-droit" data-domain="droit" onclick="setDomain(this,'droit')">📜 Droit</button>
-    <button class="domain-pill dp-histoire" data-domain="histoire" onclick="setDomain(this,'histoire')">🏛️ Histoire</button>
-    <button class="domain-pill dp-culture" data-domain="culture" onclick="setDomain(this,'culture')">🎭 Culture</button>
-    <button class="domain-pill dp-economie" data-domain="economie" onclick="setDomain(this,'economie')">📈 Économie</button>
-    <button class="domain-pill dp-philosophie" data-domain="philosophie" onclick="setDomain(this,'philosophie')">💭 Philosophie</button>
+    <button class="domain-pill dp-all on" onclick="setDomain(this,'all')">🌐 Tous</button>
+    <button class="domain-pill dp-politique" onclick="setDomain(this,'politique')">⚖️ Politique</button>
+    <button class="domain-pill dp-droit" onclick="setDomain(this,'droit')">📜 Droit</button>
+    <button class="domain-pill dp-histoire" onclick="setDomain(this,'histoire')">🏛️ Histoire</button>
+    <button class="domain-pill dp-culture" onclick="setDomain(this,'culture')">🎭 Culture</button>
+    <button class="domain-pill dp-economie" onclick="setDomain(this,'economie')">📈 Économie</button>
+    <button class="domain-pill dp-philosophie" onclick="setDomain(this,'philosophie')">💭 Philosophie</button>
   </div>
 
-  <!-- SEARCH -->
   <div class="search-wrap">
-    <input
-      class="search-input"
-      id="searchInput"
-      type="text"
+    <input class="search-input" id="searchInput" type="text"
       placeholder="Ex : habeas corpus, keynésianisme, populisme, allégorie…"
-      onkeydown="if(event.key==='Enter')decode()"
-    />
+      onkeydown="if(event.key==='Enter')decode()"/>
     <button class="search-btn" id="searchBtn" onclick="decode()">DÉCODER</button>
   </div>
   <div class="search-hint">Tape un mot ou concept — <strong>DECODE</strong> s'occupe du reste.</div>
 
-  <!-- SUGGESTIONS -->
-  <div class="suggestions-title">Suggestions rapides</div>
+  <div class="sugg-title">Suggestions rapides</div>
   <div class="suggestions" id="suggestions"></div>
 
-  <!-- MAIN CONTENT -->
   <div id="mainContent">
     <div class="empty-state">
       <div class="empty-title">Qu'est-ce que tu veux comprendre ?</div>
@@ -480,49 +194,49 @@ header {
     </div>
   </div>
 
-  <!-- SEARCH HISTORY -->
-  <div class="search-history" id="historySection" style="display:none;">
+  <div class="history-section" id="historySection" style="display:none;">
     <div class="history-title">Concepts explorés récemment</div>
     <div class="history-items" id="historyItems"></div>
   </div>
 
 </div>
-
 <script>
-// ── STATE
-let currentDomain = 'all';
-let searchHistory = [];
+var currentDomain = 'all';
+var searchHistory = [];
 
-// ── DOMAIN COLORS
-const DOMAIN_COLORS = {
-  politique: '#c0392b', droit: '#1a4a7a', histoire: '#c9882a',
-  culture: '#1e6641', economie: '#5b2d8e', philosophie: '#2c7873',
-  sciences: '#c06030', default: '#1a1612'
+var DOMAIN_COLORS = {
+  politique:'#c0392b', droit:'#1a4a7a', histoire:'#c9882a',
+  culture:'#1e6641', economie:'#5b2d8e', philosophie:'#2c7873',
+  sciences:'#c06030'
 };
 
-// ── SUGGESTIONS BY DOMAIN
-const SUGGESTIONS = {
-  all: ['Habeas corpus','Keynésianisme','Populisme','Sophisme','Oligarchie','Renaissance','Paradoxe de Zénon','Laïcité','Due process','Inflation','Allégorie de la caverne','Mercantilisme'],
-  politique: ['Populisme','Oligarchie','Laïcité','Veto','Suffrage universel','Démocratie représentative','Parti pris','Lobbyisme'],
-  droit: ['Habeas corpus','Due process','Présomption d\'innocence','Jurisprudence','Inculpé','Droit naturel','Prérogative royale','In dubio pro reo'],
-  histoire: ['Renaissance','Guerre froide','Réforme protestante','Colonialisme','Absolutisme','Révolution industrielle','Ère des Lumières','Géopolitique'],
-  culture: ['Allégorie','Baroque','Avant-garde','Dialecte','Syncrétisme','Iconoclasme','Postmodernisme','Kitsch'],
-  economie: ['Keynésianisme','Inflation','Mercantilisme','Stagflation','Aléa moral','Monopsone','Courbe de Laffer','Récession'],
-  philosophie: ['Paradoxe de Zénon','Allégorie de la caverne','Utilitarisme','Déterminisme','Scepticisme','Dialectique','Nihilisme','Épistémologie'],
+var SUGGESTIONS = {
+  all:['Habeas corpus','Keynésianisme','Populisme','Sophisme','Oligarchie','Renaissance','Laïcité','Due process','Inflation','Allégorie de la caverne','Mercantilisme','Paradoxe de Zénon'],
+  politique:['Populisme','Oligarchie','Laïcité','Veto','Suffrage universel','Démocratie représentative','Lobbyisme','Démagogie'],
+  droit:['Habeas corpus','Due process','Présomption d\'innocence','Jurisprudence','In dubio pro reo','Inculpé','Droit naturel','Prérogative'],
+  histoire:['Renaissance','Guerre froide','Colonialisme','Absolutisme','Révolution industrielle','Lumières','Géopolitique','Réforme protestante'],
+  culture:['Allégorie','Baroque','Avant-garde','Syncrétisme','Iconoclasme','Postmodernisme','Kitsch','Dialecte'],
+  economie:['Keynésianisme','Inflation','Stagflation','Mercantilisme','Aléa moral','Courbe de Laffer','Récession','Monopsone'],
+  philosophie:['Allégorie de la caverne','Paradoxe de Zénon','Utilitarisme','Déterminisme','Scepticisme','Dialectique','Nihilisme','Épistémologie']
 };
 
 function setDomain(btn, domain) {
   currentDomain = domain;
-  document.querySelectorAll('.domain-pill').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  var pills = document.querySelectorAll('.domain-pill');
+  for (var i = 0; i < pills.length; i++) pills[i].classList.remove('on');
+  btn.classList.add('on');
   renderSuggestions();
 }
 
 function renderSuggestions() {
-  const list = SUGGESTIONS[currentDomain] || SUGGESTIONS.all;
-  document.getElementById('suggestions').innerHTML = list
-    .map(s => `<button class="sugg-btn" onclick="quickSearch('${s}')">${s}</button>`)
-    .join('');
+  var list = SUGGESTIONS[currentDomain] || SUGGESTIONS.all;
+  var html = '';
+  for (var i = 0; i < list.length; i++) {
+    var s = list[i];
+    var safe = s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    html += '<button class="sugg-btn" onclick="quickSearch(\'' + safe + '\')">' + esc(s) + '</button>';
+  }
+  document.getElementById('suggestions').innerHTML = html;
 }
 
 function quickSearch(term) {
@@ -530,209 +244,198 @@ function quickSearch(term) {
   decode();
 }
 
-// ── DECODE FUNCTION
-async function decode() {
-  const raw = document.getElementById('searchInput').value.trim();
-  if (!raw) return;
-
-  const btn = document.getElementById('searchBtn');
-  btn.disabled = true;
-  btn.textContent = '...';
-
-  // Show loading
-  document.getElementById('mainContent').innerHTML = `
-    <div class="loading-wrap">
-      <div class="loading-spinner"></div>
-      <div class="loading-text">Décodage en cours…</div>
-      <div class="loading-sub">Contexte · Explication · Exemple</div>
-    </div>`;
-
-  const domainHint = currentDomain !== 'all' ? `Domaine principal : ${currentDomain}.` : '';
-
-  const prompt = `Tu es DECODE, un traducteur expert de concepts complexes en langage accessible et engageant. 
-L'utilisateur veut comprendre : "${raw}". ${domainHint}
-
-Réponds UNIQUEMENT en JSON valide (pas de markdown, pas de backticks), avec cette structure exacte :
-
-{
-  "terme": "le terme exact tel que saisi ou corrigé",
-  "domaine": "un seul mot parmi : politique, droit, histoire, culture, economie, philosophie, sciences",
-  "prononciation": "prononciation phonétique simple si utile, sinon chaîne vide",
-  "origine": "langue et époque d'origine, ex: Latin, XVIIe siècle",
-  "definition_simple": "Une phrase courte (max 25 mots) qui explique le concept comme à un ami, sans jargon",
-  "explication": "Explication claire en 3-4 phrases. Commence par le plus simple, puis affine. Utilise un ton naturel et vivant.",
-  "contexte_historique": {
-    "date_cle": "une date ou période clé, ex: 1215, XVIIIe siècle",
-    "texte": "2-3 phrases sur l'histoire et l'origine du concept. Quand est-il apparu ? Pourquoi ?"
-  },
-  "points_cles": [
-    "Premier point essentiel à retenir, en une phrase",
-    "Deuxième point essentiel",
-    "Troisième point essentiel"
-  ],
-  "analogie": "Une comparaison du quotidien pour rendre le concept instinctif. Ex: C'est comme si...",
-  "exemple_concret": {
-    "situation": "Une situation réelle ou fictive mais très concrète illustrant le concept en 2-3 phrases",
-    "explication": "En quoi cet exemple illustre précisément le concept ? 1-2 phrases."
-  },
-  "citation": {
-    "texte": "Une citation célèbre liée au concept (réelle), ou chaîne vide si aucune pertinente",
-    "auteur": "Nom de l'auteur, ou chaîne vide"
-  },
-  "a_savoir": "Un fait surprenant ou méconnu sur ce concept, en une phrase"
-}`;
-
-  try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: prompt }]
-      })
-    });
-
-    const data = await response.json();
-    const rawText = data.content?.map(c => c.text || '').join('');
-    const clean = rawText.replace(/```json|```/g, '').trim();
-    const result = JSON.parse(clean);
-    renderResult(result, raw);
-
-    // Add to history
-    if (!searchHistory.find(h => h.terme.toLowerCase() === result.terme.toLowerCase())) {
-      searchHistory.unshift({ terme: result.terme, domaine: result.domaine });
-      if (searchHistory.length > 10) searchHistory.pop();
-      renderHistory();
-    }
-
-  } catch (err) {
-    document.getElementById('mainContent').innerHTML = `
-      <div class="error-block">
-        Une erreur s'est produite lors du décodage. Vérifie ta connexion et réessaie.<br/>
-        <small style="opacity:0.6;font-family:monospace;">${err.message}</small>
-      </div>`;
-  }
-
-  btn.disabled = false;
-  btn.textContent = 'DÉCODER';
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
 }
 
-// ── RENDER RESULT
-function renderResult(r, original) {
-  const domColor = DOMAIN_COLORS[r.domaine] || DOMAIN_COLORS.default;
-  const domLabel = r.domaine ? r.domaine.charAt(0).toUpperCase() + r.domaine.slice(1) : 'Général';
+function decode() {
+  var raw = document.getElementById('searchInput').value.trim();
+  if (!raw) return;
 
-  let html = `<div class="result-card">`;
+  var btn = document.getElementById('searchBtn');
+  btn.disabled = true;
+  btn.textContent = '…';
 
-  // HEADER
-  html += `<div class="rc-head">
-    <div class="rc-domain-tag" style="background:${domColor}">${domLabel}</div>
-    <div class="rc-term">${r.terme}</div>
-    ${r.prononciation ? `<div class="rc-pronunciation">[ ${r.prononciation} ]</div>` : ''}
-    ${r.origine ? `<div class="rc-origin">Origine : ${r.origine}</div>` : ''}
-  </div>`;
+  document.getElementById('mainContent').innerHTML =
+    '<div class="loading-wrap">' +
+    '<div class="loading-spinner"></div>' +
+    '<div class="loading-text">Décodage en cours…</div>' +
+    '<div class="loading-sub">Contexte · Explication · Exemple</div>' +
+    '</div>';
 
-  // SIMPLE DEFINITION
-  html += `<div class="rc-section">
-    <div class="section-label"><span class="section-icon">💡</span>En clair</div>
-    <div class="simple-def">${r.definition_simple}</div>
-  </div>`;
+  var domainHint = currentDomain !== 'all' ? 'Domaine principal : ' + currentDomain + '.' : '';
 
-  // EXPLANATION
-  html += `<div class="rc-section">
-    <div class="section-label"><span class="section-icon">📖</span>L'explication complète</div>
-    <div class="explanation"><p>${r.explication.replace(/\n/g,'</p><p>')}</p></div>
-  </div>`;
+  var prompt = 'Tu es DECODE, un traducteur expert de concepts complexes en langage accessible.\n' +
+    'Concept à expliquer : "' + raw + '". ' + domainHint + '\n\n' +
+    'Réponds UNIQUEMENT en JSON valide (sans markdown, sans backticks), structure exacte :\n' +
+    '{\n' +
+    '  "terme": "terme exact ou corrigé",\n' +
+    '  "domaine": "un mot parmi : politique, droit, histoire, culture, economie, philosophie, sciences",\n' +
+    '  "prononciation": "phonétique simple ou chaîne vide",\n' +
+    '  "origine": "langue et époque ou chaîne vide",\n' +
+    '  "definition_simple": "max 25 mots, sans jargon",\n' +
+    '  "explication": "3-4 phrases claires, du simple au précis",\n' +
+    '  "contexte_historique": { "date_cle": "date ou période", "texte": "2-3 phrases" },\n' +
+    '  "points_cles": ["point 1","point 2","point 3"],\n' +
+    '  "analogie": "comparaison concrète du quotidien",\n' +
+    '  "exemple_concret": { "situation": "mise en situation 2-3 phrases", "explication": "lien avec le concept" },\n' +
+    '  "citation": { "texte": "citation réelle ou chaîne vide", "auteur": "auteur ou chaîne vide" },\n' +
+    '  "a_savoir": "fait surprenant en une phrase"\n' +
+    '}';
 
-  // ANALOGY
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    var rawText = '';
+    if (data.content && Array.isArray(data.content)) {
+      for (var i = 0; i < data.content.length; i++) {
+        rawText += (data.content[i].text || '');
+      }
+    }
+    var clean = rawText.replace(/```json/g,'').replace(/```/g,'').trim();
+    var result = JSON.parse(clean);
+    renderResult(result);
+    addToHistory(result);
+  })
+  .catch(function(err) {
+    document.getElementById('mainContent').innerHTML =
+      '<div class="error-block">Une erreur s\'est produite. Vérifie ta connexion et réessaie.' +
+      '<code>' + esc(err.message || 'Erreur inconnue') + '</code></div>';
+  })
+  .finally(function() {
+    btn.disabled = false;
+    btn.textContent = 'DÉCODER';
+  });
+}
+
+function renderResult(r) {
+  var domColor = DOMAIN_COLORS[r.domaine] || '#1a1612';
+  var domLabel = r.domaine ? (r.domaine.charAt(0).toUpperCase() + r.domaine.slice(1)) : 'Général';
+  var h = '<div class="result-card">';
+
+  // HEAD
+  h += '<div class="rc-head">';
+  h += '<div class="rc-domain-tag" style="background:' + domColor + '">' + esc(domLabel) + '</div>';
+  h += '<div class="rc-term">' + esc(r.terme || '') + '</div>';
+  if (r.prononciation) h += '<div class="rc-pronunciation">[ ' + esc(r.prononciation) + ' ]</div>';
+  if (r.origine) h += '<div class="rc-origin">Origine : ' + esc(r.origine) + '</div>';
+  h += '</div>';
+
+  // EN CLAIR
+  if (r.definition_simple) {
+    h += '<div class="rc-section"><div class="section-label"><span>💡</span>En clair</div>';
+    h += '<div class="simple-def">' + esc(r.definition_simple) + '</div></div>';
+  }
+
+  // EXPLICATION
+  if (r.explication) {
+    var paras = r.explication.split(/\n+/).filter(function(p){ return p.trim(); });
+    h += '<div class="rc-section"><div class="section-label"><span>📖</span>L\'explication complète</div>';
+    h += '<div class="explanation">';
+    for (var i = 0; i < paras.length; i++) h += '<p>' + esc(paras[i]) + '</p>';
+    h += '</div></div>';
+  }
+
+  // ANALOGIE
   if (r.analogie) {
-    html += `<div class="rc-section">
-      <div class="section-label"><span class="section-icon">🔄</span>L'analogie du quotidien</div>
-      <div class="analogy-block">
-        <div class="analogy-intro">Pour mieux visualiser</div>
-        <div class="analogy-text">${r.analogie}</div>
-      </div>
-    </div>`;
+    h += '<div class="rc-section"><div class="section-label"><span>🔄</span>L\'analogie du quotidien</div>';
+    h += '<div class="analogy-block"><div class="analogy-intro">Pour mieux visualiser</div>';
+    h += '<div class="analogy-text">' + esc(r.analogie) + '</div></div></div>';
   }
 
-  // HISTORICAL CONTEXT
-  if (r.contexte_historique?.texte) {
-    html += `<div class="rc-section">
-      <div class="section-label"><span class="section-icon">🏛️</span>Contexte historique</div>
-      <div class="history-block">
-        ${r.contexte_historique.date_cle ? `<div class="history-date">${r.contexte_historique.date_cle}</div>` : ''}
-        <div class="history-text">${r.contexte_historique.texte}</div>
-      </div>
-    </div>`;
+  // CONTEXTE HISTORIQUE
+  if (r.contexte_historique && r.contexte_historique.texte) {
+    h += '<div class="rc-section"><div class="section-label"><span>🏛️</span>Contexte historique</div>';
+    h += '<div class="history-block">';
+    if (r.contexte_historique.date_cle) h += '<div class="history-date">' + esc(r.contexte_historique.date_cle) + '</div>';
+    h += '<div class="history-text">' + esc(r.contexte_historique.texte) + '</div>';
+    h += '</div></div>';
   }
 
-  // KEY POINTS
-  if (r.points_cles?.length) {
-    html += `<div class="rc-section">
-      <div class="section-label"><span class="section-icon">🎯</span>Ce qu'il faut retenir</div>
-      <div class="key-points">`;
-    r.points_cles.forEach((p, i) => {
-      html += `<div class="key-point">
-        <div class="kp-num">${String(i+1).padStart(2,'0')}</div>
-        <div class="kp-text">${p}</div>
-      </div>`;
-    });
-    html += `</div></div>`;
+  // POINTS CLÉS
+  if (r.points_cles && r.points_cles.length) {
+    h += '<div class="rc-section"><div class="section-label"><span>🎯</span>Ce qu\'il faut retenir</div>';
+    h += '<div class="key-points">';
+    for (var j = 0; j < r.points_cles.length; j++) {
+      h += '<div class="key-point"><div class="kp-num">0' + (j+1) + '</div>';
+      h += '<div class="kp-text">' + esc(r.points_cles[j]) + '</div></div>';
+    }
+    h += '</div></div>';
   }
 
-  // CONCRETE EXAMPLE
-  if (r.exemple_concret?.situation) {
-    html += `<div class="rc-section">
-      <div class="section-label"><span class="section-icon">💼</span>Exemple concret</div>
-      <div class="example-block">
-        <div class="example-label">Mise en situation</div>
-        <div class="example-text">${r.exemple_concret.situation}</div>
-        <div class="example-breakdown">→ ${r.exemple_concret.explication}</div>
-      </div>
-    </div>`;
+  // EXEMPLE
+  if (r.exemple_concret && r.exemple_concret.situation) {
+    h += '<div class="rc-section"><div class="section-label"><span>💼</span>Exemple concret</div>';
+    h += '<div class="example-block"><div class="example-label">Mise en situation</div>';
+    h += '<div class="example-text">' + esc(r.exemple_concret.situation) + '</div>';
+    if (r.exemple_concret.explication) {
+      h += '<div class="example-breakdown">→ ' + esc(r.exemple_concret.explication) + '</div>';
+    }
+    h += '</div></div>';
   }
 
   // CITATION
-  if (r.citation?.texte && r.citation?.auteur) {
-    html += `<div class="rc-section">
-      <div class="section-label"><span class="section-icon">💬</span>Ils en ont parlé</div>
-      <div class="quote-block">
-        <div class="quote-text">« ${r.citation.texte} »</div>
-        <div class="quote-author">— ${r.citation.auteur}</div>
-      </div>
-    </div>`;
+  if (r.citation && r.citation.texte && r.citation.auteur) {
+    h += '<div class="rc-section"><div class="section-label"><span>💬</span>Ils en ont parlé</div>';
+    h += '<div class="quote-block">';
+    h += '<div class="quote-text">« ' + esc(r.citation.texte) + ' »</div>';
+    h += '<div class="quote-author">— ' + esc(r.citation.auteur) + '</div>';
+    h += '</div></div>';
   }
 
   // À SAVOIR
   if (r.a_savoir) {
-    html += `<div class="rc-section" style="background:var(--bg2);">
-      <div class="section-label"><span class="section-icon">✨</span>Le savais-tu ?</div>
-      <div style="font-size:14px;color:var(--ink2);line-height:1.7;padding-left:4px;">${r.a_savoir}</div>
-    </div>`;
+    h += '<div class="rc-section" style="background:var(--bg2);">';
+    h += '<div class="section-label"><span>✨</span>Le savais-tu ?</div>';
+    h += '<div class="asavoir-text">' + esc(r.a_savoir) + '</div></div>';
   }
 
-  html += `</div>`;
-  document.getElementById('mainContent').innerHTML = html;
+  h += '</div>';
+  document.getElementById('mainContent').innerHTML = h;
 }
 
-// ── HISTORY
+function addToHistory(result) {
+  if (!result || !result.terme) return;
+  var terme = result.terme;
+  for (var i = 0; i < searchHistory.length; i++) {
+    if (searchHistory[i].terme.toLowerCase() === terme.toLowerCase()) return;
+  }
+  searchHistory.unshift({ terme: terme, domaine: result.domaine || '' });
+  if (searchHistory.length > 10) searchHistory.pop();
+  renderHistory();
+}
+
 function renderHistory() {
   if (!searchHistory.length) {
     document.getElementById('historySection').style.display = 'none';
     return;
   }
   document.getElementById('historySection').style.display = 'block';
-  document.getElementById('historyItems').innerHTML = searchHistory.map(h => {
-    const color = DOMAIN_COLORS[h.domaine] || DOMAIN_COLORS.default;
-    return `<div class="history-item" onclick="quickSearch('${h.terme}')">
-      <div class="history-dot" style="background:${color}"></div>
-      ${h.terme}
-    </div>`;
-  }).join('');
+  var html = '';
+  for (var i = 0; i < searchHistory.length; i++) {
+    var h = searchHistory[i];
+    var color = DOMAIN_COLORS[h.domaine] || '#1a1612';
+    var safe = h.terme.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    html += '<div class="history-chip" onclick="quickSearch(\'' + safe + '\')">' +
+      '<div class="history-dot" style="background:' + color + '"></div>' +
+      esc(h.terme) + '</div>';
+  }
+  document.getElementById('historyItems').innerHTML = html;
 }
 
-// ── INIT
 renderSuggestions();
 </script>
 </body>
