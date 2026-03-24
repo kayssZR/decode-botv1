@@ -602,6 +602,27 @@ function renderQuizIntro(){
 }
 
 function startQuiz(){
+ if (!user.isPremium) {
+    if (user.quizCount >= 3) {
+      showPaywall();
+      return;
+    }
+  }
+
+  user.quizCount++;
+  saveUser();
+
+  if(!searchHistory.length)return;
+
+  var btn=document.getElementById('quizContent').querySelector('.quiz-start-btn');
+  if(btn){
+    btn.disabled=true;
+    btn.textContent='Génération…';
+  }
+
+  document.getElementById('quizContent').innerHTML=
+  '<div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">Génération du quiz…</div><div class="loading-sub">QCM + Vrai/Faux adaptés à tes concepts</div></div>';
+}
   if(!searchHistory.length)return;
   var btn=document.getElementById('quizContent').querySelector('.quiz-start-btn');
   if(btn){btn.disabled=true;btn.textContent='Génération…';}
@@ -893,7 +914,55 @@ function renderHistory(){
     var safe=h.terme.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
     return '<div class="history-chip" onclick="quickSearch(\''+safe+'\')"><div class="history-dot" style="background:'+color+'"></div>'+esc(h.terme)+'</div>';
   }).join('');
+}// ===== SYSTEME UTILISATEUR =====
+let user = {
+  email: localStorage.getItem("email") || null,
+  isPremium: localStorage.getItem("isPremium") === "true",
+  quizCount: parseInt(sessionStorage.getItem("quizCount")) || 0
+};
+
+function saveUser() {
+  localStorage.setItem("email", user.email);
+  localStorage.setItem("isPremium", user.isPremium);
+  sessionStorage.setItem("quizCount", user.quizCount);
 }
+
+function showLogin() {
+  document.getElementById("loginPopup").style.display = "block";
+}
+
+function login() {
+  const email = document.getElementById("emailInput").value;
+
+  if (!email.includes("@")) {
+    alert("Email invalide");
+    return;
+  }
+
+  user.email = email;
+  saveUser();
+
+  document.getElementById("loginPopup").style.display = "none";
+}
+
+function showPaywall() {
+  document.getElementById("paywall").style.display = "block";
+
+}
+function subscribe() {
+  user.isPremium = true;
+  saveUser();
+
+  document.getElementById("paywall").style.display = "none";
+}
+
+// 🔥 AJOUT ICI
+window.addEventListener("load", () => {
+  if (!user.email) {
+    setTimeout(showLogin, 1000);
+  }
+});
+
 </script>
 </body>
 </html>
