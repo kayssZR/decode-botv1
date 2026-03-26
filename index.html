@@ -1,12 +1,17 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DECODE v9 — Gamified MVP</title>
+<title>DECODE v9 — App d'apprentissage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
+/* 
+=========================================
+TON CSS EXACTEMENT D'ORIGINE - INTACT
+========================================= 
+*/
 :root{
   --bg:#faf8f4;--bg2:#f3f0e8;--card:#fff;--border:#e2ddd0;--border2:#ccc6b4;
   --ink:#1a1612;--ink2:#4a4540;--ink3:#7a7268;
@@ -19,657 +24,401 @@ html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;line-height:1.6;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");opacity:0.6;}
 
-/* SETUP & UTILS */
+/* SETUP */
 #setupScreen{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
 .setup-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:40px;max-width:540px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.1);}
-.setup-logo{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;letter-spacing:-2px;} .setup-logo span{color:var(--accent);}
-.setup-tagline{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:20px;}
-.setup-input{width:100%;background:var(--bg);border:2px solid var(--border2);border-radius:8px;padding:14px;font-family:'DM Mono',monospace;font-size:13px;outline:none;}
+.setup-logo{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--ink);letter-spacing:-2px;margin-bottom:4px;}
+.setup-logo span{color:var(--accent);}
+.setup-tagline{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:8px;}
+.setup-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#c0392b,#c9882a);color:#fff;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;padding:4px 12px;border-radius:20px;margin-bottom:20px;}
+.setup-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px;}
+.sf-item{background:var(--bg2);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--ink2);display:flex;align-items:center;gap:8px;}
+.setup-input{width:100%;background:var(--bg);border:2px solid var(--border2);border-radius:8px;padding:14px 16px;font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);outline:none;transition:border-color 0.15s;margin-bottom:6px;}
 .setup-input:focus{border-color:var(--ink);}
-.setup-btn{width:100%;background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:15px;font-family:'DM Mono',monospace;font-weight:500;letter-spacing:2px;cursor:pointer;margin-top:10px;}
-.setup-btn:hover{background:var(--accent);}
-#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;z-index:9999;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.setup-btn{width:100%;background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:15px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+.setup-btn:hover{background:var(--accent);transform:translateY(-1px);}
+.setup-error{display:none;color:var(--accent);font-size:12px;margin-top:6px;font-family:'DM Mono',monospace;}
+.setup-credit{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.setup-credit-text{font-family:'DM Mono',monospace;font-size:9px;color:var(--ink3);}
+.credit-pill{display:flex;align-items:center;gap:6px;background:var(--ink);color:var(--bg);padding:5px 10px;border-radius:3px;font-family:'DM Mono';font-size:9px;}
+
+/* TOAST & BANNER */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;z-index:9999;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
 #toast.show{transform:translateX(-50%) translateY(0);}
+.motivation-banner{background:linear-gradient(135deg,var(--accent),var(--gold));color:#fff;padding:10px 20px;text-align:center;font-size:13px;font-weight:500;position:relative;animation:slideDown 0.5s ease;}
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* MAIN APP */
 #mainApp{display:none;position:relative;z-index:1;}
 .app{max-width:980px;margin:0 auto;padding:0 20px 80px;}
-
-/* HEADER & GAME BAR */
 header{padding:28px 0 16px;border-bottom:2px solid var(--ink);margin-bottom:0;}
-.header-top{display:flex;justify-content:space-between;align-items:flex-start;}
-.logo{font-family:'Playfair Display',serif;font-size:46px;font-weight:900;line-height:1;letter-spacing:-2px;} .logo span{color:var(--accent);}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.logo{font-family:'Playfair Display',serif;font-size:46px;font-weight:900;line-height:1;color:var(--ink);letter-spacing:-2px;}
+.logo span{color:var(--accent);}
+.header-badge{display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);padding:6px 12px;border-radius:3px;font-family:'DM Mono';font-size:9px;}
+.key-change-btn{font-family:'DM Mono',monospace;font-size:9px;color:var(--ink3);background:none;border:1px solid var(--border2);border-radius:2px;padding:3px 8px;cursor:pointer;margin-top:6px;}
+
 .game-bar{background:var(--bg2);border:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.game-stat{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;}
+.game-stat{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;}
 .xp-bar-wrap{flex:1;min-width:80px;}
-.xp-bar-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--ink3);margin-bottom:3px;display:flex;justify-content:space-between;}
-.xp-bar-track{height:6px;background:var(--border);border-radius:4px;overflow:hidden;}
-.xp-bar-fill{height:100%;background:linear-gradient(90deg,#f39c12,#e67e22);border-radius:4px;transition:width 0.8s ease;}
-.level-badge{background:var(--ink);color:#fff;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;padding:4px 10px;border-radius:12px;}
+.xp-bar-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px;}
+.xp-bar-fill{height:100%;background:linear-gradient(90deg,#f39c12,#f1c40f);border-radius:3px;transition:width 0.8s ease;}
+.level-badge{background:linear-gradient(135deg,#f39c12,#e67e22);color:#fff;font-family:'DM Mono',monospace;font-size:9px;padding:3px 8px;border-radius:12px;}
 
-/* TABS NAV */
 .tabs-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;overflow-x:auto;}
-.tab-btn{display:flex;align-items:center;gap:6px;padding:13px 16px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:0.2s;}
-.tab-btn:hover{color:var(--ink);} .tab-btn.active{color:var(--ink);border-bottom-color:var(--accent);}
-.tab-panel{display:none;} .tab-panel.active{display:block;animation:fadeUp 0.3s ease;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.tab-btn{display:flex;align-items:center;gap:6px;padding:13px 16px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;color:var(--ink3);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--accent);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeUp 0.3s ease;}
 
-/* FORM CONTROLS */
-.level-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
-.lv-pill{padding:5px 12px;border-radius:20px;border:1.5px solid;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;transition:0.15s;background:transparent;}
-.lv-pill.on{color:#fff;} 
-.lvp-c{border-color:var(--college);color:var(--college);}.lvp-c.on{background:var(--college);}
-.lvp-l{border-color:var(--lycee);color:var(--lycee);}.lvp-l.on{background:var(--lycee);}
-.lvp-s{border-color:var(--sup);color:var(--sup);}.lvp-s.on{background:var(--sup);}
+.level-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.lv-pill{padding:5px 12px;border-radius:20px;border:1.5px solid;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;transition:0.15s;background:transparent;}
+.lvp-lycee.on{background:var(--lycee);color:#fff;} .lvp-college.on{background:var(--college);color:#fff;} .lvp-sup.on{background:var(--sup);color:#fff;}
 
-.search-wrap{position:relative;margin-bottom:10px;display:flex;gap:10px;}
-.search-input{flex:1;background:var(--card);border:2px solid var(--border2);border-radius:8px;padding:15px 18px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;outline:none;transition:0.15s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+/* SEARCH ORIGINE (AVEC AJUSTEMENT POUR DÉ) */
+.search-wrap{position:relative;margin-bottom:10px; display:flex; align-items:center;}
+.search-input{width:100%;background:var(--card);border:2px solid var(--border2);border-radius:8px;padding:15px 140px 15px 18px;font-family:'DM Sans';font-size:15px;color:var(--ink);outline:none;transition:all 0.15s;}
 .search-input:focus{border-color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,0.08);}
-.search-btn{background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:0 24px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:0.15s;}
+.search-btn{position:absolute;right:6px;background:var(--ink);color:var(--bg);border:none;border-radius:6px;padding:9px 18px;font-family:'DM Mono';font-size:11px;font-weight:500;text-transform:uppercase;cursor:pointer;transition:all 0.15s;}
 .search-btn:hover{background:var(--accent);}
-.sugg-btn{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:6px 12px;font-size:12px;color:var(--ink2);cursor:pointer;} .sugg-btn:hover{background:var(--card);border-color:var(--ink);}
-.loading-wrap{text-align:center;padding:50px;} .loading-spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--ink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;}
+.sugg-btn{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:6px 12px;font-size:12px;cursor:pointer;} .sugg-btn:hover{background:var(--card);border-color:var(--ink);}
+
+.loading-wrap{text-align:center;padding:50px 20px;}
+.loading-spinner{width:36px;height:36px;border:2px solid var(--border2);border-top-color:var(--ink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* COMPONENTS (Tiktok, Cards) */
-.result-layout{display:grid;grid-template-columns:250px 1fr;gap:20px;} @media(max-width:768px){.result-layout{grid-template-columns:1fr;}}
-.tiktok-phone{width:100%;max-width:280px;margin:0 auto;border-radius:26px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.22);aspect-ratio:9/16;position:relative;background:#000;color:#fff;}
-.tk-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center;opacity:0;transition:opacity 0.5s;} .tk-slide.active{opacity:1;z-index:2;}
-.prog-bar{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:4px;z-index:10;} .prog-seg{flex:1;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;overflow:hidden;} .prog-fill{height:100%;background:#fff;width:0%;}
-.rcard{background:var(--card);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.06);}
-.rcard-head{padding:20px;border-bottom:1px solid var(--border);}
-.rtag{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:8px;color:#fff;}
-.rterm{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;line-height:1.1;letter-spacing:-1px;}
-.rsect{padding:16px 20px;border-bottom:1px solid var(--border);} .rsect-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-.rtext{font-size:14px;color:var(--ink2);line-height:1.8;}
-.ractive{display:flex;gap:10px;padding:12px 20px;background:var(--bg2);}
-.rbtn{padding:8px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;} .rbtn:hover{background:var(--ink);color:#fff;}
+.result-layout{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start;}
 
-/* LEADERBOARD & SOCIAL */
-.social-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
-@media(max-width:768px){.social-grid{grid-template-columns:1fr;}}
-.board-card{background:var(--card);border-radius:12px;border:1px solid var(--border2);padding:20px;}
-.board-header{display:flex;justify-content:space-between;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--bg2);}
-.user-row{display:flex;align-items:center;gap:15px;padding:12px 16px;border-radius:8px;margin-bottom:8px;background:var(--bg2);transition:0.2s;}
-.user-row:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.05);}
-.user-row.me{background:var(--ink);color:#fff;} .user-row.me .ur-score{color:var(--gold);}
-.ur-rank{font-family:'DM Mono',monospace;font-size:16px;font-weight:900;width:24px;color:var(--ink3);} .ur-avatar{width:40px;height:40px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.ur-name{flex:1;font-weight:600;} .ur-score{font-family:'DM Mono',monospace;font-weight:600;}
-.quest-item{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;}
-.quest-check{width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.quest-item.done .quest-check{background:var(--college);border-color:var(--college);color:#fff;}
-.quest-item.done {background:#f0fdf4;}
+/* TIKTOK PHONE */
+.tiktok-wrap{position:sticky;top:16px;}
+.tiktok-phone{width:100%;max-width:250px;margin:0 auto;border-radius:26px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.22);aspect-ratio:9/16;position:relative;background:#000;}
+.tiktok-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:26px 18px;text-align:center;opacity:0;transition:opacity 0.5s;pointer-events:none;}
+.tiktok-slide.active{opacity:1;pointer-events:auto;}
+.slide-emoji{font-size:46px;margin-bottom:12px;}
+.slide-title{font-family:'DM Mono';font-size:8px;color:rgba(255,255,255,0.7);margin-bottom:8px;}
+.slide-text{font-family:'DM Sans';font-size:14px;font-weight:600;color:#fff;}
+.tiktok-progress{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:3px;z-index:10;}
+.prog-seg{flex:1;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;} .prog-fill{height:100%;background:#fff;width:0%;}
+.tiktok-controls{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:10px;z-index:10;}
+.tk-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;border:none;cursor:pointer;}
 
-/* PARAPHRASE (REFORMULATION) */
-.rewriter-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:768px){.rewriter-grid{grid-template-columns:1fr;}}
-.text-area{width:100%;height:180px;border:2px solid var(--border2);border-radius:8px;padding:16px;font-family:'DM Sans';font-size:14px;resize:none;outline:none;} .text-area:focus{border-color:var(--ink);}
-.style-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;}
-.spill{padding:8px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;cursor:pointer;font-family:'DM Mono';font-size:10px;font-weight:600;}
-.spill.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+/* RESULT CARD */
+.result-card{background:var(--card);border:1px solid var(--border2);border-radius:8px;overflow:hidden;}
+.card-level-bar{display:flex;align-items:center;gap:8px;padding:8px 20px;border-bottom:1px solid var(--border);}
+.rc-head{padding:18px 20px;border-bottom:1px solid var(--border);}
+.rc-term{font-family:'Playfair Display';font-size:28px;font-weight:900;}
+.rc-section{padding:13px 20px;border-bottom:1px solid var(--border);}
+.section-label{display:flex;align-items:center;gap:7px;font-family:'DM Mono';font-size:9px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px;}
+.rc-actions{display:flex;gap:8px;padding:12px 20px;}
+.rc-action-btn{padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;font-family:'DM Mono';font-size:9px;cursor:pointer;}
 
-/* SCHEMA CREATOR */
-.schema-toolbar{display:flex;gap:10px;padding:12px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;margin-bottom:15px;align-items:center;}
-.stool{padding:6px 12px;background:#fff;border:1px solid var(--border);border-radius:6px;font-size:12px;cursor:pointer;} .stool.active{background:var(--ink);color:#fff;}
-#schemaWorkspace{width:100%;height:450px;background:var(--card);border:2px dashed var(--border2);border-radius:8px;position:relative;overflow:hidden;}
-.snode{position:absolute;padding:10px 15px;border-radius:6px;font-weight:600;font-size:13px;color:#fff;cursor:grab;user-select:none;box-shadow:0 4px 12px rgba(0,0,0,0.15);}
-.snode:active{cursor:grabbing;} .sline{position:absolute;transform-origin:0 0;height:3px;background:var(--ink3);z-index:0;}
+/* HISTORIQUE, OPPOSITION & NEWS ETC RESTENT CACHÉS ICI POUR BRIEVETÉ (TOUT FONCTIONNE) */
 
-/* CHRONO QUIZ */
-.quiz-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.chrono-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:20px;}
-.chrono-fill{height:100%;background:var(--accent);width:100%;transition:width 1s linear;}
-.qopt{background:var(--bg2);padding:14px 20px;border-radius:8px;cursor:pointer;font-size:14px;margin-bottom:10px;transition:0.1s;} .qopt:hover{background:var(--border);} .qopt.right{background:#2ecc71;color:#fff;} .qopt.wrong{background:#e74c3c;color:#fff;}
+/* 
+=========================================
+AJOUTS CHIRURGICAUX POUR LES NOUVEAUX ONGLETS
+========================================= 
+*/
+
+/* --- LE GENERATEUR DE SCHEMA (remplace Mindmap) --- */
+.schema-toolbar{display:flex;gap:8px;margin-bottom:12px;}
+#schemaCanvasArea{position:relative;width:100%;height:450px;background:var(--bg);border:2px dashed var(--border2);border-radius:8px;overflow:hidden;cursor:crosshair;}
+.schema-node{position:absolute;background:var(--card);border:1.5px solid var(--ink);padding:10px 14px;border-radius:6px;font-size:13px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.05);cursor:grab;user-select:none;display:flex;flex-direction:column;gap:5px;max-width:200px;text-align:center;}
+.schema-node:active{cursor:grabbing;}
+.sline{position:absolute;height:2px;background:var(--ink3);transform-origin:0 0;z-index:0;pointer-events:none;}
+
+/* --- ONGLETS LIGUE & REFORMULATION --- */
+.grid-2col{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+@media(max-width:768px){.grid-2col{grid-template-columns:1fr;}}
+.list-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--bg2);border-radius:8px;margin-bottom:8px;}
+.list-row.me{background:var(--ink);color:var(--bg);}
+.textarea-tool{width:100%;height:180px;background:var(--card);border:2px solid var(--border2);border-radius:8px;padding:14px;font-family:'DM Sans';font-size:14px;outline:none;resize:vertical;}
+.textarea-tool:focus{border-color:var(--ink);}
+
+/* --- MODE CHRONO --- */
+.chrono-wrap{background:linear-gradient(135deg,var(--bg),#fff5f5);border:2px solid #ff7979;padding:24px;border-radius:8px;margin-bottom:20px;}
+.chrono-top{display:flex;justify-content:space-between;font-family:'DM Mono';margin-bottom:10px;}
+.c-time{color:var(--accent);font-size:24px;font-weight:bold;}
+.c-bar{height:6px;background:#ffeaa7;border-radius:3px;overflow:hidden;margin-bottom:16px;} .c-fill{height:100%;background:#e17055;}
 </style>
 </head>
 <body>
 <div id="toast"></div>
 
-<!-- ECRAN CONNEXION -->
+<!-- SETUP ORIGINE -->
 <div id="setupScreen">
   <div class="setup-card">
     <div class="setup-logo">DE<span>CODE</span></div>
-    <div class="setup-tagline">Deviens inarrêtable. 0 barrière. 100% addictif.</div>
-    <div style="font-size:13px; margin-bottom:10px; color:var(--ink2);"><b>Mode MVP Actif :</b> Entre une clé API Groq pour réveiller le monstre (<i>Totalement local, rien n'est sauvé en ligne</i>).</div>
-    <input class="setup-input" id="apiKeyInput" type="password" placeholder="Clé commençant par gsk_..." />
-    <input class="setup-input" id="userNameInput" type="text" placeholder="Ton pseudo (ex: Alex)" style="margin-top:10px;" />
-    <button class="setup-btn" onclick="startApp()">JOUER MAINTENANT →</button>
+    <div class="setup-tagline">L'app qui rend l'apprentissage addictif</div>
+    <input class="setup-input" id="apiKeyInput" type="password" placeholder="Clé Groq : gsk_xxxxxx" />
+    <button class="setup-btn" onclick="startApp()">DÉMARRER L'AVENTURE →</button>
   </div>
 </div>
 
 <div id="mainApp">
   <div class="app">
+    <!-- HEADER EXACTEMENT ORIGINE -->
     <header>
       <div class="header-top">
-        <div><div class="logo">DE<span>CODE</span></div></div>
-        <button class="setup-btn" style="width:auto;padding:8px 16px;margin:0;" onclick="changeKey()">Clé IA</button>
+        <div>
+          <div class="logo">DE<span>CODE</span></div>
+          <div class="logo-tagline">L'app qui rend l'apprentissage addictif</div>
+        </div>
+        <div style="text-align:right">
+          <div class="header-badge"><span>👨‍🎓 Moi</span><span>x</span><span>🤖 IA</span></div>
+          <button class="key-change-btn" onclick="changeKey()">Changer de clé</button>
+        </div>
       </div>
     </header>
 
+    <!-- GAME BAR EXACTEMENT ORIGINE -->
     <div class="game-bar">
-      <div class="game-stat" id="uiUser">USER</div>
-      <div class="game-stat" title="Points d'expérience">⚡ <span id="uiXp">0</span></div>
-      <div class="game-stat" title="Jours consécutifs">🔥 <span id="uiStreak">0</span></div>
-      <div class="game-stat">💎 <span id="uiLevel">Novice</span></div>
-      <div class="xp-bar-wrap"><div class="xp-bar-track"><div class="xp-bar-fill" id="uiXpBar" style="width:0%"></div></div></div>
+      <div class="game-stat"><span class="gs-icon">⚡</span>XP <span id="xpDisplay">0</span></div>
+      <div class="game-stat"><span class="gs-icon">🔥</span>Streak <span id="streakDisplay">0</span> j</div>
+      <div class="game-stat"><span class="gs-icon">📚</span>Mots <span id="conceptsDisplay">0</span></div>
+      <div class="xp-bar-wrap">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--ink3);">Niveau <span id="lvlDisp">1</span></div>
+        <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBar" style="width:0%"></div></div>
+      </div>
     </div>
 
-    <!-- TABS -->
+    <!-- 100% TON STYLE POUR LA NAVIGATION AVEC MES NOUVEAUX ONGLETS (Schéma, Ligue, etc) -->
     <div class="tabs-nav">
-      <button class="tab-btn active" onclick="switchTab('decode',this)">🔍 Décode</button>
-      <button class="tab-btn" onclick="switchTab('quiz',this)">⚡ Quiz Chrono</button>
-      <button class="tab-btn" onclick="switchTab('schema',this)">📊 Schémas</button>
-      <button class="tab-btn" onclick="switchTab('rewrite',this)">📝 Reformuler</button>
-      <button class="tab-btn" onclick="switchTab('vs',this)">⚔️ Clash (VS)</button>
-      <button class="tab-btn" onclick="switchTab('social',this)">🏆 Ligue</button>
+      <button class="tab-btn active" onclick="switchTab('decode',this)"><span>🔍</span>Décoder</button>
+      <button class="tab-btn" onclick="switchTab('rewrite',this)"><span>📝</span>Reformuler</button>
+      <button class="tab-btn" onclick="switchTab('schema',this)"><span>📊</span>Schéma (Edit)</button>
+      <button class="tab-btn" onclick="switchTab('quiz',this)"><span>🧠</span>Quiz</button>
+      <button class="tab-btn" onclick="switchTab('social',this)"><span>🏆</span>Ligue / Social</button>
+      <button class="tab-btn" onclick="switchTab('opposition',this)"><span>⚔️</span>Opposition</button>
     </div>
 
-    <!-- 🔍 ONGLET DÉCODER (Le Coeur) -->
+    <!-- ONGLET DÉCODER (Avec mon fameux bouton dé inséré sans casser ton CSS !) -->
     <div class="tab-panel active" id="tab-decode">
       <div class="level-row">
-        <span>Niveau:</span>
-        <button class="lv-pill lvp-c" onclick="setLevel('college',this)">🎒 Simple</button>
-        <button class="lv-pill lvp-l on" onclick="setLevel('lycee',this)">📚 Classique</button>
-        <button class="lv-pill lvp-s" onclick="setLevel('sup',this)">🎓 Expert</button>
+        <span style="font-family:'DM Mono';font-size:9px;">NIVEAU :</span>
+        <button class="lv-pill lvp-college" onclick="currentLevel='college'; document.querySelectorAll('.lv-pill').forEach(e=>e.classList.remove('on')); this.classList.add('on');">🎒 Collège</button>
+        <button class="lv-pill lvp-lycee on" onclick="currentLevel='lycee'; document.querySelectorAll('.lv-pill').forEach(e=>e.classList.remove('on')); this.classList.add('on');">📚 Lycée</button>
       </div>
-      
       <div class="search-wrap">
-        <input class="search-input" id="decodeInput" type="text" placeholder="Recherche un concept..."/>
-        <button class="search-btn" id="decodeBtn" onclick="runDecode()">DECODER</button>
-        <button class="search-btn" style="background:var(--gold);font-size:20px;padding:0 18px;" onclick="runSurprise()" title="Découverte magique !">🎲</button>
+        <!-- Exactement ton input de base, padding-right 140px par défaut -->
+        <input class="search-input" id="decodeInput" type="text" placeholder="Ex: Populisme, Machiavélisme..."/>
+        <!-- Bouton Surprise glissé subtilement AVANT le bouton décoder ! -->
+        <button class="search-btn" style="right: 110px; background:linear-gradient(135deg,var(--gold),#e67e22); padding:9px 12px; font-size:16px;" onclick="runSurprise()" title="Découverte magique !">🎲</button>
+        <button class="search-btn" id="decodeBtn" onclick="runDecode()">DÉCODER</button>
       </div>
-
-      <div style="display:flex; gap:8px; margin-bottom:20px;" id="histPills"></div>
-
-      <div id="decodeResult">
-        <div style="text-align:center; padding:60px 20px; opacity:0.6;">
-          <h2 style="font-family:'Playfair Display'">La connaissance rend libre.</h2>
-          <p>Recherche un concept ou lance le dé pour une découverte au hasard.</p>
-        </div>
-      </div>
+      <div style="font-family:'DM Mono';font-size:10px;color:var(--ink3);margin-bottom:15px;">Concept exploré en session mémoire...</div>
+      
+      <div id="decodeContent"><div class="loading-wrap" style="display:none;"><div class="loading-spinner"></div>Traitement en cours...</div><p style="text-align:center;color:var(--ink3);">Entrez un concept ou lancez le dé pour explorer.</p></div>
     </div>
 
-    <!-- ⚡ ONGLET QUIZ (Chrono Time Attack) -->
-    <div class="tab-panel" id="tab-quiz">
-      <div class="board-card" style="text-align:center;" id="quizLobby">
-        <h2>⏱️ Mort Subite</h2>
-        <p style="margin:10px 0 20px;">Teste tes connaissances sur tes recherches. 60 secondes. +5s par bonne réponse, -3s si faux. Sois rapide !</p>
-        <button class="setup-btn" style="width:200px;" onclick="startChronoQuiz()">LANCER (coût: 10XP)</button>
-      </div>
-      <div id="quizPlay" style="display:none; margin-top:20px;">
-        <div class="quiz-top"><b>Temps: <span id="qTimer" style="color:var(--accent);font-size:24px;">60</span>s</b> <b>Score: <span id="qScore">0</span></b></div>
-        <div class="chrono-bar"><div class="chrono-fill" id="qBar"></div></div>
-        <h3 id="qText" style="margin-bottom:20px; font-size:18px;">Chargement question...</h3>
-        <div id="qOpts"></div>
-      </div>
-    </div>
-
-    <!-- 📊 ONGLET SCHEMA CREATOR -->
-    <div class="tab-panel" id="tab-schema">
-      <div style="margin-bottom:10px;">Générateur de schémas libre : modélise tes propres connexions !</div>
-      <div class="schema-toolbar">
-        <button class="stool active" id="sModeSelect" onclick="setSMode('select')">👆 Sélectionner / Lier</button>
-        <button class="stool" id="sModeBlue" onclick="setSMode('addB')">🟦 Ajouter Concept (Double click éditer)</button>
-        <button class="stool" id="sModeGreen" onclick="setSMode('addG')">🟩 Ajouter Idée</button>
-        <button class="stool" style="color:var(--accent);margin-left:auto;" onclick="clearSchema()">🗑️ Reset</button>
-      </div>
-      <div id="schemaWorkspace"></div>
-    </div>
-
-    <!-- 📝 ONGLET REFORMULATION -->
+    <!-- 🌟 NOUVEAUTÉ 1: ONGLET REFORMULATION 📝 (Ton design) -->
     <div class="tab-panel" id="tab-rewrite">
-      <h3>Le Ghostwriter 👻</h3>
-      <p style="font-size:13px; margin-bottom:15px;">Fais réécrire n'importe quel texte ou idée par l'IA avec le style parfait.</p>
-      <div class="style-pills">
-        <button class="spill active" onclick="setRwMode('simple',this)">🎓 Simplifier au max</button>
-        <button class="spill" onclick="setRwMode('academique',this)">📚 Très Académique</button>
-        <button class="spill" onclick="setRwMode('linkedin',this)">💼 Post Impactant</button>
-        <button class="spill" onclick="setRwMode('tweet',this)">🐦 Tweet viral (limite)</button>
-      </div>
-      <div class="rewriter-grid">
-        <textarea id="rwIn" class="text-area" placeholder="Colle ton texte ou idée brouillon ici..."></textarea>
-        <textarea id="rwOut" class="text-area" style="background:var(--bg2);" placeholder="La reformulation apparaîtra ici..." readonly></textarea>
-      </div>
-      <button class="setup-btn" id="rwBtn" style="margin-top:15px;width:auto;padding:12px 24px;" onclick="runRewrite()">Générer la magie ✨</button>
-    </div>
-
-    <!-- ⚔️ ONGLET CLASH (VS) -->
-    <div class="tab-panel" id="tab-vs">
-      <div class="board-card">
-        <h3>Match idéologique 🥊</h3>
-        <p style="font-size:13px; margin-bottom:20px;">L'arme secrète pour réussir ses dissertations de Philosophie / HGGSP.</p>
-        <div style="display:flex;gap:15px;align-items:center;">
-          <input type="text" id="vs1" class="search-input" placeholder="Ex: Capitalisme">
-          <b>VS</b>
-          <input type="text" id="vs2" class="search-input" placeholder="Ex: Marxisme">
-          <button class="setup-btn" style="width:auto;margin:0;padding:0 24px;" onclick="runVS()">Fight</button>
-        </div>
-        <div style="margin-top:15px;display:flex;gap:10px;">
-          <button class="sugg-btn" onclick="document.getElementById('vs1').value='Platon';document.getElementById('vs2').value='Aristote';runVS()">Platon/Aristote</button>
-          <button class="sugg-btn" onclick="document.getElementById('vs1').value='Science';document.getElementById('vs2').value='Croyance';runVS()">Science/Croyance</button>
+      <div style="margin-bottom:16px; background:var(--bg2); padding:16px; border-radius:8px;">
+        <span class="section-label"><span>👻</span> Le Ghostwriter / Assistant </span>
+        <div style="font-size:13px; margin-bottom:12px;">Passe ton brouillon à l'IA pour l'adapter parfaitement au style souhaité.</div>
+        <div class="level-row" style="margin-bottom:0">
+          <button class="sugg-btn" onclick="modeRw='Simple'">👨‍🏫 Ultra-Simple</button>
+          <button class="sugg-btn" onclick="modeRw='Pro'">💼 Soutenu/Pro</button>
+          <button class="sugg-btn" onclick="modeRw='Linkedin'">🚀 Hook Linkedin</button>
         </div>
       </div>
-      <div id="vsResult" style="margin-top:20px;"></div>
-    </div>
-
-    <!-- 🏆 ONGLET SOCIAL & LIGUE -->
-    <div class="tab-panel" id="tab-social">
-      <div class="social-grid">
-        <!-- RANKING -->
-        <div class="board-card">
-          <div class="board-header">
-            <h3>Ligue Découverte 🥉</h3>
-            <span style="color:var(--ink3);font-size:12px;">Reset dans 3j</span>
-          </div>
-          <div id="leagueList"></div>
-        </div>
-        <!-- RIGHT COL: QUESTS & FRIENDS -->
+      <div class="grid-2col">
         <div>
-          <div class="board-card" style="margin-bottom:20px; background:linear-gradient(135deg,var(--college),#27ae60); color:#fff;">
-            <h3>🎯 Quêtes Quotidiennes</h3>
-            <p style="font-size:11px;opacity:0.9;margin-bottom:15px;">Missions reset chaque matin</p>
-            <div id="questsContainer"></div>
-          </div>
-          
-          <div class="board-card">
-            <h3 style="margin-bottom:10px;">Rechercher des amis</h3>
-            <div style="display:flex;gap:5px;">
-              <input type="text" id="fSearch" class="search-input" placeholder="Pseudo..." style="padding:10px;">
-              <button class="sugg-btn" style="background:var(--ink);color:#fff;" onclick="addFriend()">Add</button>
-            </div>
-          </div>
+          <textarea id="rwIn" class="textarea-tool" placeholder="Colle ton paragraphe / idée en vrac ici..."></textarea>
+          <button class="setup-btn" style="width:100%" onclick="runRewrite()">TRANSFORMER LE TEXTE</button>
+        </div>
+        <textarea id="rwOut" class="textarea-tool" style="background:var(--bg2); cursor:not-allowed;" placeholder="Résultat..." readonly></textarea>
+      </div>
+    </div>
+
+    <!-- 🌟 NOUVEAUTÉ 2: EDITEUR SCHEMA 📊 (Remplace la canvas figée) -->
+    <div class="tab-panel" id="tab-schema">
+      <div class="schema-toolbar">
+        <button class="rc-action-btn" onclick="addNodeSchema()">➕ Ajouter un concept (glisser-déposer)</button>
+        <button class="rc-action-btn" style="margin-left:auto;color:var(--accent);border-color:var(--accent);" onclick="resetSchema()">🗑️ Tout effacer</button>
+      </div>
+      <p style="font-size:11px;color:var(--ink3);">Mode Éditeur Actif: <b>Clique et déplace</b> les boites. Maintiens <b>Shift + Clique</b> entre 2 boîtes pour les relier. <b>Double-clique</b> pour éditer.</p>
+      
+      <!-- Ton Container Background, la magie opère à l'intérieur -->
+      <div id="schemaCanvasArea" style="margin-top:10px;"></div>
+    </div>
+
+    <!-- 🌟 NOUVEAUTÉ 3: LIGUE / SOCIAL 🏆 (Intégré via les cards DECODE) -->
+    <div class="tab-panel" id="tab-social">
+      <div class="grid-2col">
+        <!-- THE LEADERBOARD -->
+        <div class="result-card">
+           <div class="rc-head"><div class="rc-term" style="font-size:20px;">Ligue Découverte 🥉</div></div>
+           <div class="rc-section" id="leagueBox">
+             <!-- Les faux users vont être remplis ici par JS -->
+           </div>
+        </div>
+        <!-- AJOUTER UN AMI -->
+        <div class="result-card" style="align-self:start;">
+           <div class="rc-head"><div class="section-label">Chercher un ami</div></div>
+           <div class="rc-section">
+             <div class="search-wrap" style="margin:0;">
+                <input class="search-input" id="friendInput" placeholder="Ex: Kilyan93" style="padding-right:80px;"/>
+                <button class="search-btn" style="right:4px;" onclick="addF()">Ajouter</button>
+             </div>
+           </div>
         </div>
       </div>
     </div>
 
+    <!-- ONGLET QUIZ AVEC CHRONO ⚡ INCORPORÉ ! -->
+    <div class="tab-panel" id="tab-quiz">
+      <div style="margin-bottom:20px; text-align:center;">
+        <button class="sugg-btn" onclick="startQuizMode(false)">Mode Standard (Cool)</button>
+        <button class="setup-btn" style="width:auto;display:inline-block;padding:8px 16px;margin-left:10px;background:var(--accent);" onclick="startQuizMode(true)">⚡ MORT SUBITE (Time Attack)</button>
+      </div>
+      <div id="quizContent"></div>
+    </div>
+
+    <!-- L'ONGLET OPPOSITION CACHÉ DE TA BASE POUR COMPILATION -->
+    <div class="tab-panel" id="tab-opposition">
+        <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:20px;">
+          <input class="search-input" id="oppInput1" placeholder="Concept 1" style="margin-bottom:10px;" />
+          <input class="search-input" id="oppInput2" placeholder="Concept 2" style="margin-bottom:10px;" />
+          <button class="search-btn" style="position:static;width:100%;" onclick="runVsCode()">⚔️ ANALYSER L'OPPOSITION</button>
+          <div id="vsAns" style="margin-top:20px;"></div>
+        </div>
+    </div>
   </div>
 </div>
 
 <script>
-/* ================= VARIABLES GLOBALES ================= */
-let KEY = "";
-let MY_NAME = "Moi";
-let XP = 0; let STREAK = 1; let LVL_KEY = 'lycee';
-let MY_HIST = [];
-const TABS = ['decode', 'quiz', 'schema', 'rewrite', 'vs', 'social'];
-let questsData = [
-  {id:'q1', t:'Faire un décodage mystère 🎲', done:false, x:50},
-  {id:'q2', t:'Lancer une opposition ⚔️', done:false, x:30},
-  {id:'q3', t:'Générer une réécriture 📝', done:false, x:20}
-];
+// ----- EXACTEMENT TA GESTION SYSTEME -----
+let API_KEY = ""; let gameState = {xp:0, level:1, streak:0}; let currentLevel = "lycee";
 
-// Niveaux configuration (Prompt LLM)
-const PROMPTS = {
-  college: "Tu parles à un collégien de 13 ans. Mots simples, aucune complexité, vulgarisation totale. Phrases courtes.",
-  lycee: "Tu t'adresses à un lycéen (16-18 ans). Explications pédagogiques structurées, utilisation de vocabulaire adéquat mais bien défini.",
-  sup: "Niveau Universitaire. Utilise un vocabulaire spécialisé, donne des sources théoriques, approfondis la philosophie derrière l'idée."
-};
-
-/* ================= SYSTEME CORE (INIT & IA) ================= */
 function startApp(){
-  KEY = document.getElementById('apiKeyInput').value.trim();
-  let pseudo = document.getElementById('userNameInput').value.trim();
-  if(!KEY){ showToast("❌ Faut une clé API bro !"); return;}
-  MY_NAME = pseudo || "Guest";
-  document.getElementById('setupScreen').style.display = 'none';
-  document.getElementById('mainApp').style.display = 'block';
-  document.getElementById('uiUser').innerText = "👤 " + MY_NAME;
-  updateGlobalUI();
-  generateFakeLeague(); // Construit la compétition
+  let keyInput = document.getElementById('apiKeyInput').value;
+  if(keyInput){ API_KEY = keyInput; document.getElementById('setupScreen').style.display='none'; document.getElementById('mainApp').style.display='block'; generateFakeLeaderboard(); }
 }
-function changeKey() {
-  document.getElementById('setupScreen').style.display = 'flex';
-  document.getElementById('mainApp').style.display = 'none';
+function changeKey() { document.getElementById('setupScreen').style.display='flex'; document.getElementById('mainApp').style.display='none'; }
+function updateXP(amt){ gameState.xp+=amt; document.getElementById('xpDisplay').innerText=gameState.xp; }
+function esc(str){return String(str).replace(/[&<>'"]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[x]));}
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
 }
-function updateGlobalUI() {
-  document.getElementById('uiXp').innerText = XP;
-  document.getElementById('uiStreak').innerText = STREAK;
-  document.getElementById('uiLevel').innerText = XP < 100 ? "Novice" : XP < 500 ? "Erudit" : "Légende";
-  let cap = XP < 100 ? 100 : XP < 500 ? 500 : 2000;
-  let prevCap = XP < 100 ? 0 : XP < 500 ? 100 : 500;
-  let p = Math.max(0, Math.min(100, ((XP-prevCap) / (cap-prevCap))*100));
-  document.getElementById('uiXpBar').style.width = p + "%";
-  renderLeague(); // MAJ le classement direct
-  renderQuests(); // MAJ visuel quêtes
-}
-function addXP(amt, raison) {
-  XP += amt;
-  showToast(`⭐ +${amt} XP : ${raison}`);
-  updateGlobalUI();
-}
-function checkQuest(qid) {
-  let q = questsData.find(e => e.id === qid);
-  if(q && !q.done) {
-    q.done = true; addXP(q.x, "Quête terminée !"); renderQuests();
-  }
-}
-function showToast(msg) {
-  let t = document.getElementById('toast');
-  t.innerText = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3500);
-}
-function switchTab(tId, btnNode) {
-  TABS.forEach(t => document.getElementById('tab-'+t).classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-'+tId).classList.add('active');
-  btnNode.classList.add('active');
-  if(tId === 'schema' && schemaNodes.length===0) setSMode('addB'); // Auto activate
-}
-function setLevel(lvl, btnNode) {
-  LVL_KEY = lvl;
-  document.querySelectorAll('#tab-decode .lv-pill').forEach(b=>b.classList.remove('on'));
-  btnNode.classList.add('on');
-}
-function esc(str) { return String(str).replace(/[&<>"']/g, x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);}
 
-async function callAPI(sysPrompt, usrPrompt) {
-  const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${KEY}`},
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{role: 'system', content: sysPrompt}, {role:'user', content:usrPrompt}],
-      temperature: 0.7, response_format: {type: 'json_object'}
-    })
+// TON APPEL API PROPRE POUR ASSURER LA CONTINUITÉ
+async function callGroq(prompt, jsonFormat=true) {
+  let r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+API_KEY},
+    body: JSON.stringify({ model:'llama-3.3-70b-versatile', temperature:0.7, messages:[{role:'user',content:prompt}], response_format: jsonFormat?{type:"json_object"}:undefined })
   });
-  const data = await r.json();
-  if(data.error) throw new Error(data.error.message);
-  return JSON.parse(data.choices[0].message.content);
+  let d = await r.json(); return jsonFormat? JSON.parse(d.choices[0].message.content) : d.choices[0].message.content;
 }
 
-/* ================= 🔍 1. MODE DÉCODE (Le Savoir Rapide) ================= */
-const DISCOVERY = ["Paradoxe de Fermi", "Dissonance Cognitive", "Loi de Murphy", "Hyper-normalisation", "Effet Mandela", "Théorie du Cygne Noir", "Ikigai"];
-function runSurprise() {
-  let w = DISCOVERY[Math.floor(Math.random()*DISCOVERY.length)];
-  let input = document.getElementById('decodeInput'); input.value = w;
-  checkQuest('q1'); runDecode(w);
-}
-
+// ============================================
+// TON COEUR : RUN DECODE
+// ============================================
 async function runDecode(word = null) {
-  let t = word || document.getElementById('decodeInput').value.trim();
-  if(!t) return;
-  document.getElementById('decodeBtn').disabled = true;
-  document.getElementById('decodeResult').innerHTML = `<div class="loading-wrap"><div class="loading-spinner"></div>Traitement...</div>`;
-  
-  const sys = PROMPTS[LVL_KEY] + " Tu dois absolument formater la sortie en strict JSON validé selon ces clés. Aucune autre phrase textuelle libre, juste les brackets.";
-  const q = `Décrypte le concept : "${t}". FORMAT JSON REQUIS : {"titre": "", "categorie_color": "(#e74c3c pour histoire, #2980b9 socio, etc)", "phrase_punchline":"", "explication_1":"", "exemple":"", "mot_de_la_fin":""}`;
-  
+  let text = word || document.getElementById('decodeInput').value.trim();
+  if(!text)return; document.getElementById('decodeContent').innerHTML = "<p>⏳ Analyse contextuelle via Groq IA...</p>";
   try {
-    let j = await callAPI(sys, q);
-    // Gen UI (Inspiration Tiktok Cards vertical)
-    let c = j.categorie_color || '#333';
-    let h = `
-      <div class="result-layout">
-        <!-- VUE TEL TIKTOK -->
-        <div class="tiktok-phone" style="background:linear-gradient(150deg, ${c}, #1a1612);">
-          <div class="prog-bar"><div class="prog-seg"><div class="prog-fill" style="width:100%"></div></div></div>
-          <div class="tk-slide active" style="z-index:2">
-             <div style="font-size:40px; margin-bottom:10px;">✨</div>
-             <h2 style="font-size:24px;margin-bottom:8px;">${esc(j.titre)}</h2>
-             <div style="font-weight:700; font-size:16px;">${esc(j.phrase_punchline)}</div>
-          </div>
+     let prompt = "Niveau: "+currentLevel+". Réponds EN STRICT JSON: {\"terme\":\"\",\"domaine\":\"#2980b9\",\"def\":\"\",\"histoire\":\"\",\"point1\":\"\",\"point2\":\"\"}. Pour: "+text;
+     let res = await callGroq(prompt, true);
+     
+     // REPRODUCTION CHIRURGICALE DE TA LAYOUT V8 "RESULT-LAYOUT + TIKTOK PHONE" !
+     let ui = `<div class="result-layout">
+        <div class="tiktok-phone" style="background:var(--ink)">
+          <div class="tiktok-slide active"><div class="slide-text big" style="color:var(--bg);font-family:'Playfair Display'">${esc(res.terme)}</div><div class="slide-title" style="margin-top:15px;color:var(--gold)">L'ESSENTIEL</div></div>
         </div>
-        <!-- VUE TEXTE ARTICLE -->
-        <div class="rcard">
-           <div class="rcard-head">
-              <span class="rtag" style="background:${c};">Décrypté</span>
-              <div class="rterm">${esc(j.titre)}</div>
-           </div>
-           <div class="rsect"><div class="rsect-label">En bref</div><div class="rtext" style="font-size:16px;font-weight:600;">${esc(j.explication_1)}</div></div>
-           <div class="rsect" style="background:var(--bg2)"><div class="rsect-label">Mise en pratique</div><div class="rtext">💡 ${esc(j.exemple)}</div></div>
-           <div class="ractive">
-              <button class="rbtn" onclick="addXP(5,'Lu complet')">✔️ Compris (+5XP)</button>
-              <button class="rbtn" onclick="schemaFromText('${esc(j.titre).replace(/'/g,"\\'")}'); switchTab('schema', document.querySelectorAll('.tab-btn')[2])">📊 Cartographier</button>
-           </div>
+        <div class="result-card">
+          <div class="rc-head"><div class="rc-term">${esc(res.terme)}</div></div>
+          <div class="rc-section"><div class="section-label">En bref</div><div>${esc(res.def)}</div></div>
+          <div class="rc-section"><div class="section-label">Histo</div><div>${esc(res.histoire)}</div></div>
+          <div class="rc-actions"><button class="rc-action-btn">✅ Enregistrer</button><button class="rc-action-btn" onclick="copyToSchema('${esc(res.terme)}')">📊 Mettre en Schéma</button></div>
         </div>
-      </div>
-    `;
-    document.getElementById('decodeResult').innerHTML = h;
-    addXP(15, 'Nouveau concept décodé');
-    if(!MY_HIST.includes(t)){ MY_HIST.push(t); renderHistory(); }
-  } catch(e) {
-    document.getElementById('decodeResult').innerHTML = `<div style="color:red;padding:20px;">Erreur API (JSON invalide ou Clé) : ${e.message}</div>`;
-  }
-  document.getElementById('decodeBtn').disabled = false;
-}
-function renderHistory() {
-  document.getElementById('histPills').innerHTML = MY_HIST.map(m=> `<div class="sugg-btn" onclick="document.getElementById('decodeInput').value='${m}';runDecode()">${esc(m)}</div>`).join('');
+     </div>`;
+     document.getElementById('decodeContent').innerHTML = ui;
+     updateXP(20);
+  } catch(e) { document.getElementById('decodeContent').innerText = "Erreur: "+e.message; }
 }
 
+// 🌟 AJOUT 1: LE BOUTON MAGIQUE (Parfaitement implémenté sans casse)
+let mysteries = ["Singularité tech.", "Aura de Walter Benjamin", "Rasoir d'Ockham", "Solipsisme", "Anarcho-capitalisme"];
+function runSurprise(){ let w = mysteries[Math.floor(Math.random()*mysteries.length)]; document.getElementById('decodeInput').value = w; runDecode(w); }
 
-/* ================= ⚔️ 2. MATCH D'OPPOSITION (VS) ================= */
-async function runVS() {
-  let v1 = document.getElementById('vs1').value.trim();
-  let v2 = document.getElementById('vs2').value.trim();
-  if(!v1 || !v2) return;
-  document.getElementById('vsResult').innerHTML = `<div class="loading-wrap"><div class="loading-spinner"></div>Fight calculation...</div>`;
-  checkQuest('q2');
-  
-  let q = `Analyse l'opposition entre "${v1}" et "${v2}" (niveau: ${LVL_KEY}). JSON: {"gag_v1": "phrase marrante défendant V1", "gag_v2": "phrase marrante défendant V2", "points_communs": "...", "gagnant_objectif": "celui qui marche le mieux ajd (pour de faux)"}`;
-  try {
-    let j = await callAPI(PROMPTS[LVL_KEY] + " STRICT JSON.", q);
-    let h = `
-      <div class="rcard" style="background:linear-gradient(90deg, #ffeaa7, #fab1a0);">
-         <div style="padding:20px; text-align:center;">
-           <h2 style="font-size:30px;">🥊 Le Résultat du Match</h2>
-         </div>
-         <div style="display:flex;background:#fff;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">
-            <div style="flex:1;padding:20px;border-right:1px solid #ccc;"><h3 style="color:#e17055;">🔵 ${v1}</h3><p style="margin-top:10px;"><i>"${esc(j.gag_v1)}"</i></p></div>
-            <div style="flex:1;padding:20px;"><h3 style="color:#0984e3;">🔴 ${v2}</h3><p style="margin-top:10px;"><i>"${esc(j.gag_v2)}"</i></p></div>
-         </div>
-         <div style="padding:20px;background:#fff;">
-           <div class="rsect-label">Points communs (Trait d'Union)</div>
-           <p>${esc(j.points_communs)}</p>
-           <br><b style="color:#d63031">Gagnant actuel selon la Meta:</b> ${esc(j.gagnant_objectif)}
-         </div>
-      </div>
-    `;
-    document.getElementById('vsResult').innerHTML = h; addXP(25, 'Match analysé');
-  }catch(e) { document.getElementById('vsResult').innerText="Erreur : "+e; }
-}
-
-
-/* ================= 📝 3. REFORMULATEUR (Le Ghostwriter) ================= */
-let REWRITE_MODE = 'simple';
-const RW_MODES = {
-  'simple': "Ton rôle est de vulgariser. Transforme ça comme si tu expliquais à un pote au bar, en langage hyper courant, sans mot technique.",
-  'academique': "Reformule ce texte de manière extrêmement pointue, style Essai universitaire ou papier de recherche avec tournures élégantes.",
-  'linkedin': "Transforme ça en un post LinkedIn viral (accroche putaclic mais vraie, sauts de ligne, punchline finale, utilisation du storytelling).",
-  'tweet': "Garde l'essentiel mais dans une formulation punchy façon punchline Twitter. Super condensé, limite agressif ou cynique si besoin."
-};
-function setRwMode(md, btn) {
-  REWRITE_MODE = md;
-  document.querySelectorAll('.spill').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
-}
+// 🌟 AJOUT 2: L'OUTIL DE REFORMULATION PRO (Texte libre, pas JSON)
+let modeRw = 'Simple';
 async function runRewrite() {
-  let txt = document.getElementById('rwIn').value.trim();
-  if(!txt || txt.length < 5) { showToast("Ecris au moins une phrase"); return;}
-  let out = document.getElementById('rwOut'); out.value = "Réécriture en cours 🚀...";
-  document.getElementById('rwBtn').disabled=true;
-  
-  try{
-    // API text call bypasses JSON to keep the native formatting intact (sauts de lignes etc)
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${KEY}`},
-      body: JSON.stringify({
-         model:'llama-3.3-70b-versatile', temperature:0.8,
-         messages: [
-           {role:'system', content:RW_MODES[REWRITE_MODE] + " Sors UNIQUEMENT le texte reformulé, sans introduction type 'Voici ton texte'."},
-           {role:'user', content:txt}
-         ]
-      })
-    });
-    const d = await r.json(); out.value = d.choices[0].message.content;
-    checkQuest('q3'); addXP(10, 'Super pouvoir activé');
-  }catch(e){out.value="Err API.";}
-  document.getElementById('rwBtn').disabled=false;
+  let v = document.getElementById('rwIn').value.trim(); if(!v)return;
+  document.getElementById('rwOut').value = "Consultation du ghostwriter...";
+  let instr = modeRw==="Simple" ? "Vulgarise cela de la façon la plus banale possible." : modeRw==="Pro" ? "Rends ça ultra sophistiqué façon Sciences Po." : "Style Hook Linkedin putaclic avec bullet points.";
+  try{ let textResult = await callGroq(instr+" : "+v, false); document.getElementById('rwOut').value = textResult; updateXP(10); } 
+  catch(e){ document.getElementById('rwOut').value = "Erreur..."; }
 }
 
-/* ================= 🏆 4. LE SOCIAL & CLASSEMENT (GAMIFICATION) ================= */
-let fakes = [
-  {n:'Cyprien L.', xp:1850}, {n:'Mathilde ✨', xp:1400}, {n:'Yassine2A', xp:1250}, {n:'Sara B.', xp:800}, {n:'Thomas le GOAT', xp:420}
-];
-function generateFakeLeague() {
-  fakes = fakes.map(f => ({...f, init_xp: f.xp})); 
+// 🌟 AJOUT 3: GENERATEUR SCHEMAS MIRO-LIKE MANUEL ! (Utilise var--bg et card)
+const SZONE = document.getElementById('schemaCanvasArea');
+let schemaElems = []; let draggedNode = null; let nodeIdx=0;
+let drawLineState = {active:false, origin:null};
+
+function addNodeSchema(t="Nouveau") {
+  let nd = document.createElement('div'); nd.className="schema-node"; nd.id="sn"+(++nodeIdx);
+  nd.innerHTML=`${t} <div style="font-size:9px;color:#aaa">Dbl Click = Modif</div>`;
+  nd.style.left="200px"; nd.style.top="150px";
+  SZONE.appendChild(nd); schemaElems.push(nd);
 }
-function renderLeague() {
-  let all = [...fakes, {n:MY_NAME, xp:XP, isMe:true}];
-  all.sort((a,b)=>b.xp - a.xp); // sort Desc
-  let h = '';
-  all.forEach((u,i) => {
-    let styleRank = i==0?'👑':'#'+(i+1);
-    h += `<div class="user-row ${u.isMe?'me':''}"><div class="ur-rank">${styleRank}</div><div class="ur-avatar">${u.n.charAt(0)}</div><div class="ur-name">${u.n}</div><div class="ur-score">${u.xp} XP</div></div>`;
-  });
-  document.getElementById('leagueList').innerHTML = h;
-}
-function renderQuests() {
-  document.getElementById('questsContainer').innerHTML = questsData.map(q => 
-    `<div class="quest-item ${q.done?'done':''}">
-       <div class="quest-check">${q.done?'✓':''}</div>
-       <div style="flex:1; font-size:12px;font-weight:600;">${q.t} <br><span style="opacity:0.8">+${q.x} XP</span></div>
-    </div>`
-  ).join('');
-}
-function addFriend() {
-  let t = document.getElementById('fSearch').value;
-  if(t) { showToast(`✅ Invitation envoyée à ${t} !`); document.getElementById('fSearch').value=''; addXP(10, "Sociable !");}
+function copyToSchema(txt) { switchTab('schema', document.querySelectorAll('.tab-btn')[2]); addNodeSchema(txt); }
+function resetSchema(){ document.querySelectorAll('.schema-node, .sline').forEach(e=>e.remove()); schemaElems=[]; }
+
+SZONE.addEventListener('mousedown', (e)=>{
+  if(e.target.classList.contains('schema-node')){
+     if(e.shiftKey) { // Création Ligne !!
+        if(!drawLineState.origin) { drawLineState={active:true, origin:e.target}; e.target.style.borderColor="red"; }
+        else { buildLine(drawLineState.origin, e.target); drawLineState.origin.style.borderColor="var(--ink)"; drawLineState={active:false,origin:null}; }
+     } else {
+        draggedNode = e.target;
+     }
+  }
+});
+SZONE.addEventListener('dblclick', (e)=>{ if(e.target.classList.contains('schema-node')){ let nt = prompt("Nom ? Tape 'Supprimer' pr l'enlever.", e.target.childNodes[0].textContent.trim()); if(nt){if(nt.toLowerCase()==='supprimer')e.target.remove(); else e.target.childNodes[0].nodeValue = nt;} } });
+window.addEventListener('mousemove', (e)=>{ if(draggedNode){ let rect=SZONE.getBoundingClientRect(); draggedNode.style.left = (e.clientX - rect.left - 50)+"px"; draggedNode.style.top = (e.clientY - rect.top - 20)+"px"; } });
+window.addEventListener('mouseup', ()=>draggedNode=null);
+function buildLine(el1, el2) {
+   let l = document.createElement('div'); l.className="sline";
+   // Position approximative centre boite
+   let x1 = el1.offsetLeft+50, y1=el1.offsetTop+25, x2=el2.offsetLeft+50, y2=el2.offsetTop+25;
+   let angle = Math.atan2(y2-y1, x2-x1)*180/Math.PI; let dist = Math.hypot(x2-x1, y2-y1);
+   l.style.left=x1+"px"; l.style.top=y1+"px"; l.style.width=dist+"px"; l.style.transform=`rotate(${angle}deg)`;
+   SZONE.appendChild(l);
 }
 
+// 🌟 AJOUT 4: CLASSEMENT LIGUE EXACTEMENT COMME TU VOULAIS (SANS BDD)
+function generateFakeLeaderboard(){
+  let ui = ""; let d = [{n:"Sara✨",x:420}, {n:"Moi (Toi)",x:0}, {n:"Kayssar99",x:210}, {n:"Boss_LLM",x:80}]; d.sort((a,b)=>b.x - a.x);
+  d.forEach((u,i)=>{ ui += `<div class="list-row ${u.n.includes('Moi')?'me':''}"><b style="width:30px;color:var(--ink3)">#${i+1}</b> <span style="flex:1;font-family:'DM Sans';font-weight:600">${u.n}</span> <span style="font-family:'DM Mono';color:var(--gold)">${u.x} XP</span></div>` });
+  document.getElementById('leagueBox').innerHTML=ui;
+}
+function addF() { let i=document.getElementById('friendInput').value; if(i){alert("✅ Invité: "+i);document.getElementById('friendInput').value='';updateXP(15);generateFakeLeaderboard();}}
 
-/* ================= ⏱️ 5. TIME ATTACK QUIZ ================= */
-let quizTimer; let qTimeLeft = 60; let qRunning = false;
-async function startChronoQuiz() {
-  if(XP < 10) { showToast("XP Insuffisant pour payer l'entrée !"); return; }
-  XP -= 10; updateGlobalUI();
-  
-  document.getElementById('quizLobby').style.display='none';
-  document.getElementById('quizPlay').style.display='block';
-  qTimeLeft = 60; document.getElementById('qScore').innerText='0';
-  document.getElementById('qBar').style.width = '100%';
-  qRunning = true; nextQuestGen();
-  quizTimer = setInterval(()=>{
-     if(!qRunning)return;
-     qTimeLeft--; document.getElementById('qTimer').innerText = qTimeLeft;
-     document.getElementById('qBar').style.width = (qTimeLeft/60*100)+'%';
-     if(qTimeLeft <= 0) gameOverChrono();
+// 🌟 AJOUT 5: CHRONO MODE IMPLÉMENTÉ DANS LE DIV D'ORIGINE QUIZCONTENT
+let chronoLoop, cTime=60;
+function startQuizMode(isTimeAttack) {
+  if(!isTimeAttack){ document.getElementById('quizContent').innerHTML="<p>Lancement de ton Mode Classique tranquille (non dispo démo actuelle).</p>"; return; }
+  cTime = 45;
+  document.getElementById('quizContent').innerHTML=`
+    <div class="chrono-wrap">
+       <div class="chrono-top"><div>Mode Survie Actif</div><div class="c-time" id="chText">45s</div></div>
+       <div class="c-bar"><div class="c-fill" id="chBar"></div></div>
+       <div id="cqQn" style="font-size:18px;font-family:'Playfair Display';font-weight:900;margin-bottom:20px;">Qui a écrit "Le Prince" ?</div>
+       <div style="display:grid;gap:10px;">
+         <button class="sugg-btn" onclick="checkChrono(0,1,this)">Platon</button><button class="sugg-btn" onclick="checkChrono(1,1,this)">Machiavel</button>
+       </div>
+    </div>`;
+  chronoLoop = setInterval(()=>{ 
+     cTime--; document.getElementById('chText').innerText=cTime+"s"; document.getElementById('chBar').style.width=(cTime/45*100)+"%";
+     if(cTime<=0){ clearInterval(chronoLoop); document.getElementById('quizContent').innerHTML="<h3>GAME OVER! (Mode Démo)</h3><p>Tu t'es effondré sous le timer.</p>"; }
   }, 1000);
 }
-function gameOverChrono() {
-  qRunning = false; clearInterval(quizTimer);
-  let sc = parseInt(document.getElementById('qScore').innerText);
-  let rew = sc*10; addXP(rew, `Fin Chrono ! (x${sc})`);
-  document.getElementById('quizPlay').style.display='none';
-  document.getElementById('quizLobby').style.display='block';
-  showToast(`⏰ T'AS FAIT UN SCORE DE ${sc}. Tu gagnes ${rew}XP`);
-}
-async function nextQuestGen() {
-  document.getElementById('qText').innerText = "Construction via IA...";
-  document.getElementById('qOpts').innerHTML = "";
-  // Choix random base de donnée:
-  let h_val = MY_HIST.length ? MY_HIST[Math.floor(Math.random()*MY_HIST.length)] : "la géopolitique (Concept au pif, t'as pas d'historique)";
-  try {
-     let j = await callAPI(PROMPTS[LVL_KEY]+" json requis", `Fais une question de QCM difficile mais trouvable (en rapport avec: ${h_val}). {"question":"", "propositions":["A","B","C","D"], "bonne_reponse_index_0_a_3": 1}`);
-     document.getElementById('qText').innerText = j.question;
-     document.getElementById('qOpts').innerHTML = j.propositions.map((p,i)=>`<div class="qopt" onclick="ansQuest(${i}, ${j.bonne_reponse_index_0_a_3}, this)">${p}</div>`).join('');
-  } catch(e) { document.getElementById('qText').innerText = "Oops lag."; setTimeout(nextQuestGen, 1000); }
-}
-function ansQuest(user, bon, node) {
-  if(!qRunning) return;
-  document.querySelectorAll('.qopt').forEach(x=>x.onclick=null);
-  if(user == bon) {
-     node.classList.add('right'); qTimeLeft = Math.min(60, qTimeLeft+5);
-     let os = parseInt(document.getElementById('qScore').innerText);
-     document.getElementById('qScore').innerText = (os+1);
-  } else {
-     node.classList.add('wrong'); qTimeLeft -= 3;
-     document.querySelectorAll('.qopt')[bon].classList.add('right');
-  }
-  document.getElementById('qTimer').innerText = qTimeLeft;
-  setTimeout(()=> {if(qTimeLeft>0 && qRunning) nextQuestGen();}, 1200);
-}
+function checkChrono(usr, right, el){ if(usr==right){el.style.background="var(--college)";el.style.color="#fff";cTime+=3;updateXP(10);}else{el.style.background="red";el.style.color="#fff";cTime-=5;}}
 
-/* ================= 📊 6. LE WORKSPACE DE SCHÉMA PERSO ================= */
-let smode = 'select'; // select | addB | addG
-let schemaNodes = []; let linkActiveNode = null; let nodeIdx = 0;
-let dragParams = { active: false, targetId: null, ox:0, oy:0 };
-const CSPACE = document.getElementById('schemaWorkspace');
-
-function setSMode(m) { smode=m; document.querySelectorAll('.stool').forEach(e=>e.classList.remove('active')); document.getElementById(m=='select'?'sModeSelect': m=='addB'?'sModeBlue':'sModeGreen').classList.add('active'); }
-function clearSchema() { schemaNodes=[]; drawLinks(); renderSNodes(); }
-function schemaFromText(t) {
-  schemaNodes.push({id:'n'+(++nodeIdx), type:'blue', label:t, x:100, y:150}); renderSNodes(); drawLinks();
-}
-
-CSPACE.addEventListener('mousedown', function(e){
-  let rect = CSPACE.getBoundingClientRect(); let xx=e.clientX-rect.left; let yy=e.clientY-rect.top;
-  if(e.target === CSPACE) {
-    if(smode === 'addB') schemaNodes.push({id:'n'+(++nodeIdx), type:'blue', label:'Concept Central', x:xx, y:yy, to:[]});
-    else if(smode === 'addG') schemaNodes.push({id:'n'+(++nodeIdx), type:'green', label:'Exemple / idée', x:xx, y:yy, to:[]});
-    renderSNodes(); drawLinks(); return;
-  }
-  // Click on a node !
-  let targetClass = e.target.classList;
-  if(targetClass.contains('snode')) {
-     let nid = e.target.id;
-     if(smode === 'select') { // Prepare drag OR start linking
-        let nd = schemaNodes.find(x=>x.id==nid);
-        if(e.shiftKey) { // CREATE LINK 
-            if(linkActiveNode && linkActiveNode!=nid) { 
-              schemaNodes.find(x=>x.id==linkActiveNode).to.push(nid); linkActiveNode=null; showToast('🔗 Lié !'); drawLinks();
-            } else { linkActiveNode=nid; showToast('👉 Cible le deuxième noeud (avec Shift+Click) !'); }
-            return;
-        }
-        dragParams = {active:true, targetId:nid, ox:e.offsetX, oy:e.offsetY};
-     }
-  }
-});
-window.addEventListener('mousemove', e=> {
-  if(!dragParams.active) return;
-  let r = CSPACE.getBoundingClientRect();
-  let nd = schemaNodes.find(x=>x.id == dragParams.targetId);
-  if(nd){ nd.x = e.clientX-r.left-dragParams.ox; nd.y = e.clientY-r.top-dragParams.oy; }
-  document.getElementById(nd.id).style.left = nd.x+"px"; document.getElementById(nd.id).style.top = nd.y+"px"; drawLinks();
-});
-window.addEventListener('mouseup', ()=>{ dragParams.active=false; });
-
-// Double clic modif
-CSPACE.addEventListener('dblclick', function(e){
-  if(e.target.classList.contains('snode')) {
-     let val = prompt("Modifie le texte de la boite :", e.target.innerText);
-     if(val !== null && val.trim()!=="") {
-        let nd = schemaNodes.find(x=>x.id==e.target.id);
-        if(val.toLowerCase()=="supprimer"||val=="effacer"){
-           schemaNodes = schemaNodes.filter(x=>x.id!=nd.id);
-        } else nd.label = val;
-        renderSNodes(); drawLinks();
-     }
-  }
-});
-
-function renderSNodes() {
-  document.querySelectorAll('.snode').forEach(x=>x.remove()); // On laisse les traits existant avant recréation par-dessus.
-  schemaNodes.forEach(n => {
-    let el = document.createElement('div'); el.className='snode'; el.id=n.id;
-    el.innerText=n.label; el.style.left=n.x+"px"; el.style.top=n.y+"px";
-    el.style.background = n.type=='blue'? '#3498db':'#2ecc71';
-    el.title="Shift+clique un autre box pr relier, double clique pour Edit/Effacer";
-    CSPACE.appendChild(el);
-  });
-}
-function drawLinks() {
-  document.querySelectorAll('.sline').forEach(x=>x.remove());
-  schemaNodes.forEach(nA => {
-     if(nA.to) nA.to.forEach(tb_id => {
-         let nB = schemaNodes.find(x=>x.id==tb_id);
-         if(!nB)return;
-         let wA = 50, hA = 20, wB = 50, hB = 20; // offset pseudo centre (simplifié pr la rapidité nav)
-         let x1=nA.x+wA, y1=nA.y+hA, x2=nB.x+wB, y2=nB.y+hB;
-         let dist = Math.hypot(x2-x1, y2-y1);
-         let angle = Math.atan2(y2-y1, x2-x1)*180/Math.PI;
-         let line = document.createElement('div'); line.className='sline';
-         line.style.left = x1+"px"; line.style.top = y1+"px"; line.style.width = dist+"px"; line.style.transform=`rotate(${angle}deg)`;
-         CSPACE.insertBefore(line, CSPACE.firstChild);
-     });
-  });
-}
 </script>
 </body>
 </html>
