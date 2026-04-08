@@ -723,6 +723,65 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-he
   .sidebar .sb-logo-text,.sidebar .sb-item-txt,.sidebar .sb-item-badge,.sidebar .sb-section-label,.sidebar .sb-uname,.sidebar .sb-ulvl,.sidebar .sb-key-btn,.sidebar .sb-ndot,.sidebar .sb-search{display:none;}
   .stat-cards{grid-template-columns:repeat(2,1fr);}
 }
+
+/* ===== BIBLIOTHÈQUE & COURS LONGS ===== */
+.biblio-tabs{display:flex;gap:6px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:12px;}
+.biblio-tab{background:none;border:none;padding:8px 16px;border-radius:var(--r-sm);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink4);cursor:pointer;transition:all .2s;}
+.biblio-tab.active{background:var(--bg3);color:var(--p2);border:1px solid rgba(124,106,245,0.3);}
+.biblio-tab:hover:not(.active){color:var(--ink2);}
+
+.biblio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+.cours-long-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all .2s;cursor:pointer;position:relative;}
+.cours-long-card:hover{border-color:var(--p);transform:translateY(-2px);box-shadow:var(--sh-p);}
+.clc-top{padding:18px 18px 14px;position:relative;}
+.clc-top::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p),var(--g));}
+.clc-domaine{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:8px;color:#fff;background:var(--p);}
+.clc-titre{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:6px;}
+.clc-desc{font-size:11px;color:var(--ink4);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.clc-bot{padding:10px 18px;border-top:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.clc-meta{display:flex;align-items:center;gap:10px;}
+.clc-meta-item{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink4);display:flex;align-items:center;gap:3px;}
+.clc-dl-btn{background:linear-gradient(135deg,var(--p),#9d5cf5);color:#fff;border:none;border-radius:var(--r-sm);padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.clc-dl-btn:hover{opacity:.9;}
+
+/* Statut cours en génération */
+.clc-status{display:flex;align-items:center;gap:6px;padding:6px 18px;background:rgba(124,106,245,0.07);border-top:1px solid var(--border);}
+.clc-status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;animation:glow 1.5s infinite;}
+.clc-status-dot.green{background:var(--g);}
+.clc-status-dot.yellow{background:var(--y);}
+.clc-status-dot.red{background:var(--r);}
+.clc-status-txt{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink3);flex:1;}
+.clc-progress{height:2px;background:var(--border);border-radius:1px;overflow:hidden;margin-top:2px;}
+.clc-progress-fill{height:100%;background:linear-gradient(90deg,var(--p),var(--g));border-radius:1px;transition:width .5s ease;}
+
+/* Générateur long */
+.long-gen-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:22px;}
+.long-gen-hd{padding:20px 22px 16px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(124,106,245,0.08),rgba(16,217,160,0.04));}
+.long-gen-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:10px;}
+.long-gen-badge{background:linear-gradient(135deg,var(--p),#9d5cf5);color:#fff;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+.long-gen-sub{font-size:12px;color:var(--ink4);margin-top:5px;}
+.long-gen-body{padding:20px 22px;}
+.long-gen-inp{width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:14px 18px;font-size:14px;color:var(--ink);outline:none;transition:all .2s;margin-bottom:14px;}
+.long-gen-inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(124,106,245,.12);}
+.long-gen-inp::placeholder{color:var(--ink4);}
+
+/* Progression overlay */
+.gen-progress-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;margin-top:14px;}
+.gen-progress-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink4);margin-bottom:8px;}
+.gen-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:8px;}
+.gen-progress-fill{height:100%;background:linear-gradient(90deg,var(--p),var(--g));border-radius:3px;transition:width .8s ease;}
+.gen-progress-msg{font-size:12px;color:var(--ink3);}
+.gen-progress-pct{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--p2);float:right;margin-top:-28px;}
+
+/* Filtres bibliothèque */
+.biblio-filters{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.biblio-filter-inp{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:7px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--ink);outline:none;transition:all .2s;flex:1;min-width:180px;}
+.biblio-filter-inp:focus{border-color:var(--p);}
+.biblio-filter-inp::placeholder{color:var(--ink4);}
+.biblio-select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3);outline:none;cursor:pointer;}
+.biblio-stats-bar{display:flex;align-items:center;gap:14px;padding:10px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:16px;flex-wrap:wrap;}
+.biblio-stat{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--ink4);}
+.biblio-stat strong{color:var(--p2);}
 </style>
 </head>
 <body>
@@ -796,7 +855,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-he
         </div>
       </div>
       <div style="margin-top:14px;text-align:center;">
-        <span onclick="startOffline()" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink4);cursor:pointer;letter-spacing:1px;opacity:0.6;">⚡ Continuer sans compte</span>
+        <span onclick="startOffline()" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--r2);cursor:default;letter-spacing:1px;opacity:0.7;">⚠️ Backend requis pour se connecter</span>
       </div>
       <div class="setup-credit">Créé par <em>Kayssar Zouari</em> × Claude AI · 2026</div>
     </div>
@@ -831,6 +890,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-he
         </div>
         <div class="sb-item" id="nav-cours" onclick="goTo('cours',this)">
           <span class="sb-item-ico">📚</span><span class="sb-item-txt">Mes Cours</span>
+        </div>
+        <div class="sb-item" id="nav-bibliotheque" onclick="goTo('bibliotheque',this)">
+          <span class="sb-item-ico">🏛️</span><span class="sb-item-txt">Bibliothèque</span>
         </div>
         <div class="sb-section-label">Apprendre</div>
         <div class="sb-item" id="nav-question" onclick="goTo('question',this)">
@@ -1008,8 +1070,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-he
 
         <!-- MES COURS -->
         <div class="panel" id="panel-cours">
+          <!-- GÉNÉRATEUR DE FICHES COURTES (existant) -->
           <div class="cours-gen-box">
-            <div class="cours-gen-title">✦ Générer un cours</div>
+            <div class="cours-gen-title">✦ Fiche rapide</div>
             <div class="cours-type-grid">
               <div class="cours-type-btn on" id="ctype-cours" onclick="setCourseType('cours',this)"><span class="cours-type-ico">📄</span><div class="cours-type-lbl">Fiche de cours</div></div>
               <div class="cours-type-btn" id="ctype-schema" onclick="setCourseType('schema',this)"><span class="cours-type-ico">🗺️</span><div class="cours-type-lbl">Schéma visuel</div></div>
@@ -1023,12 +1086,95 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-he
               <button class="lp lp-s" id="clvp2-sup" onclick="setCoursLevel('sup')">🎓 Sup.</button>
             </div>
             <div class="cours-inp-row">
-              <input class="cours-inp" id="coursTopicInput" placeholder="Ex : La Révolution française, Le théorème de Pythagore, L'ADN..." onkeydown="if(event.key==='Enter')generateCours()"/>
+              <input class="cours-inp" id="coursTopicInput" placeholder="Ex : La Révolution française, Le théorème de Pythagore..." onkeydown="if(event.key==='Enter')generateCours()"/>
               <button class="btn-primary" id="coursBtn" onclick="generateCours()">Générer →</button>
             </div>
           </div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--ink4);text-transform:uppercase;margin-bottom:14px;">Cours générés</div>
-          <div class="cours-grid" id="coursGrid"><div class="empty-state"><span class="empty-ico">📚</span><div class="empty-t">Aucun cours encore</div><div class="empty-s">Génère ton premier cours ci-dessus</div></div></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--ink4);text-transform:uppercase;margin-bottom:14px;">Fiches générées</div>
+          <div class="cours-grid" id="coursGrid"><div class="empty-state"><span class="empty-ico">📚</span><div class="empty-t">Aucune fiche encore</div><div class="empty-s">Génère ta première fiche ci-dessus</div></div></div>
+        </div>
+
+        <!-- BIBLIOTHÈQUE — COURS LONGS IA -->
+        <div class="panel" id="panel-bibliotheque">
+
+          <!-- Générateur cours long -->
+          <div class="long-gen-box">
+            <div class="long-gen-hd">
+              <div class="long-gen-title">
+                🏛️ Cours Long IA
+                <span class="long-gen-badge">Nouveau</span>
+              </div>
+              <div class="long-gen-sub">Génère un cours complet de 20+ pages avec chapitres, exemples et PDF téléchargeable. Si le cours existe déjà, il est servi instantanément depuis le cache.</div>
+            </div>
+            <div class="long-gen-body">
+              <input class="long-gen-inp" id="longCoursInput" placeholder="Ex : Droit Fiscal L2, La Seconde Guerre mondiale, Microéconomie L1..." onkeydown="if(event.key==='Enter')lancerCoursLong()"/>
+              <div class="lvl-row" style="margin-bottom:14px;">
+                <span class="lvl-lbl">Niveau :</span>
+                <button class="lp lp-c" id="llvp-college" onclick="setLongLevel('college',this)">🎒 Collège</button>
+                <button class="lp lp-l on" id="llvp-lycee" onclick="setLongLevel('lycee',this)">📚 Lycée</button>
+                <button class="lp lp-s" id="llvp-sup" onclick="setLongLevel('sup',this)">🎓 Sup.</button>
+              </div>
+              <button class="btn-primary" id="longCoursBtn" onclick="lancerCoursLong()" style="width:100%;padding:13px;">
+                ✦ Générer le cours complet →
+              </button>
+              <!-- Zone de progression -->
+              <div id="longCoursProgress" style="display:none;" class="gen-progress-wrap">
+                <div class="gen-progress-label">Génération en cours</div>
+                <div class="gen-progress-bar"><div class="gen-progress-fill" id="longProgFill" style="width:0%"></div></div>
+                <div class="gen-progress-pct" id="longProgPct">0%</div>
+                <div class="gen-progress-msg" id="longProgMsg">Initialisation...</div>
+              </div>
+              <!-- Résultat -->
+              <div id="longCoursResult" style="display:none;margin-top:14px;"></div>
+            </div>
+          </div>
+
+          <!-- Tabs Bibliothèque -->
+          <div class="biblio-tabs">
+            <button class="biblio-tab active" id="btab-publique" onclick="switchBiblioTab('publique',this)">🌍 Bibliothèque publique</button>
+            <button class="biblio-tab" id="btab-mes" onclick="switchBiblioTab('mes',this)">📂 Mes cours</button>
+          </div>
+
+          <!-- Filtres -->
+          <div id="biblioFilters" class="biblio-filters">
+            <input class="biblio-filter-inp" id="biblioSearch" placeholder="🔍 Rechercher un cours..." oninput="filtrerBibliotheque()" />
+            <select class="biblio-select" id="biblioDomaineFilter" onchange="filtrerBibliotheque()">
+              <option value="">Tous les domaines</option>
+              <option value="droit">⚖️ Droit</option>
+              <option value="economie">📈 Économie</option>
+              <option value="histoire">🏛️ Histoire</option>
+              <option value="philosophie">💭 Philosophie</option>
+              <option value="sciences">🔬 Sciences</option>
+              <option value="politique">⚔️ Politique</option>
+              <option value="culture">🎭 Culture</option>
+            </select>
+            <select class="biblio-select" id="biblioNiveauFilter" onchange="filtrerBibliotheque()">
+              <option value="">Tous les niveaux</option>
+              <option value="college">Collège</option>
+              <option value="lycee">Lycée</option>
+              <option value="sup">Supérieur</option>
+            </select>
+            <select class="biblio-select" id="biblioTriFilter" onchange="filtrerBibliotheque()">
+              <option value="recent">Plus récents</option>
+              <option value="vues">Plus consultés</option>
+              <option value="telechargements">Plus téléchargés</option>
+            </select>
+          </div>
+
+          <!-- Stats bar -->
+          <div class="biblio-stats-bar" id="biblioStatsBar" style="display:none;">
+            <div class="biblio-stat">📚 <strong id="bStatTotal">0</strong> cours disponibles</div>
+            <div class="biblio-stat">👁️ <strong id="bStatVues">0</strong> consultations</div>
+            <div class="biblio-stat">⚡ <strong id="bStatCache">0</strong> appels API économisés</div>
+          </div>
+
+          <!-- Grille de cours -->
+          <div class="biblio-grid" id="biblioGrid">
+            <div class="loading"><div class="spinner"></div><div class="load-t">Chargement...</div></div>
+          </div>
+
+          <!-- Pagination -->
+          <div id="biblioPagination" style="display:flex;justify-content:center;gap:8px;margin-top:20px;"></div>
         </div>
 
         <!-- QUESTION -->
@@ -1131,7 +1277,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-he
 <script>
 // ===== STATE v11 — Backend Connected =====
 var API_KEY=''; // legacy (mode offline)
-var BACKEND_URL='http://localhost:3000/api/v1';
+var BACKEND_URL='http://localhost:3000/api';
 var ACCESS_TOKEN='';
 var CURRENT_USER=null;
 var IS_OFFLINE=false;
@@ -1146,7 +1292,7 @@ var decodeCtx=[],questionCtx=[],amiHistory=[];
 var correctedText='',corrDiffData=[],diffVisible=false;
 var sidebarCollapsed=false;
 var lbTab='global';
-var TOPBAR_INFO={decode:{t:'Décoder',s:'Explore et comprends n\'importe quel concept'},correcteur:{t:'Correcteur IA',s:'Corrige et reformule tes textes en un clic'},ami:{t:'Mon Ami Alex',s:'Ton meilleur ami digital, toujours là pour toi'},cours:{t:'Mes Cours',s:'Génère des fiches, schémas et résumés IA'},question:{t:'Questions libres',s:'Pose n\'importe quelle question, reçois une réponse adaptée'},opposition:{t:'Opposition de concepts',s:'Comprends les différences et similitudes entre deux idées'},quiz:{t:'Quiz interactif',s:'Teste et renforce tes connaissances'},social:{t:'Amis & Classement',s:'Rivalise et coopère avec tes amis'},news:{t:'Actualité mondiale',s:'Reste informé grâce à l\'analyse IA'},badges:{t:'Mes Badges',s:'Tes récompenses et accomplissements'}};
+var TOPBAR_INFO={decode:{t:'Décoder',s:'Explore et comprends n\'importe quel concept'},correcteur:{t:'Correcteur IA',s:'Corrige et reformule tes textes en un clic'},ami:{t:'Mon Ami Alex',s:'Ton meilleur ami digital, toujours là pour toi'},cours:{t:'Mes Cours',s:'Génère des fiches, schémas et résumés IA'},bibliotheque:{t:'Bibliothèque',s:'Cours longs générés par l\'IA et la communauté'},question:{t:'Questions libres',s:'Pose n\'importe quelle question, reçois une réponse adaptée'},opposition:{t:'Opposition de concepts',s:'Comprends les différences et similitudes entre deux idées'},quiz:{t:'Quiz interactif',s:'Teste et renforce tes connaissances'},social:{t:'Amis & Classement',s:'Rivalise et coopère avec tes amis'},news:{t:'Actualité mondiale',s:'Reste informé grâce à l\'analyse IA'},badges:{t:'Mes Badges',s:'Tes récompenses et accomplissements'}};
 
 var DOMAIN_COLORS={politique:'#f5416a',droit:'#3d8ef5',histoire:'#f5c842',culture:'#10d9a0',economie:'#a855f7',philosophie:'#f57c32',sciences:'#3d8ef5'};
 var SLIDE_PALETTES=[['#667eea','#764ba2'],['#f093fb','#f5576c'],['#4facfe','#00f2fe'],['#43e97b','#38f9d7'],['#fa709a','#fee140'],['#a18cd1','#fbc2eb'],['#ffecd2','#fcb69f'],['#a1c4fd','#c2e9fb'],['#d4fc79','#96e6a1'],['#ff9a9e','#fecfef']];
@@ -1211,7 +1357,9 @@ async function apiCall(endpoint, method, body){
 
 async function tryRefreshToken(){
   try{
-    var res=await fetch(BACKEND_URL+'/auth/refresh',{method:'POST',credentials:'include'});
+    var rt=localStorage.getItem('decode_refresh_token');
+    if(!rt)return false;
+    var res=await fetch(BACKEND_URL+'/auth/refresh',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({refreshToken:rt})});
     if(res.ok){var data=await res.json();ACCESS_TOKEN=data.accessToken;try{localStorage.setItem('decode_access_token',ACCESS_TOKEN);}catch(e){}return true;}
   }catch(e){}
   return false;
@@ -1223,11 +1371,12 @@ function setAuthUser(data){
   IS_OFFLINE=false;
   try{localStorage.setItem('decode_access_token',data.accessToken);}catch(e){}
   try{localStorage.setItem('decode_user',JSON.stringify(data.user));}catch(e){}
+  if(data.refreshToken){try{localStorage.setItem('decode_refresh_token',data.refreshToken);}catch(e){}}
 }
 
 function clearAuth(){
   ACCESS_TOKEN='';CURRENT_USER=null;
-  try{localStorage.removeItem('decode_access_token');localStorage.removeItem('decode_user');}catch(e){}
+  try{localStorage.removeItem('decode_access_token');localStorage.removeItem('decode_user');localStorage.removeItem('decode_refresh_token');}catch(e){}
 }
 
 // ---- Switch tabs ----
@@ -1335,16 +1484,15 @@ function oauthLogin(provider){
   window.location.href=BACKEND_URL+'/auth/'+provider;
 }
 
-// ---- OFFLINE MODE ----
+// ---- MODE SANS COMPTE (désactivé - backend requis) ----
 function startOffline(){
-  IS_OFFLINE=true;
-  CURRENT_USER={username:'Invité',xp:0,streak:0,badges:[]};
-  // Demander la clé Groq en mode offline
-  var k=prompt('Mode hors-ligne : entre ta clé API Groq (gsk_...)');
-  if(!k||k.length<10){showToast('Clé Groq invalide');return;}
-  API_KEY=k;
-  try{localStorage.setItem('decode_groq_key10',k);}catch(e){}
-  launchApp();
+  showToast('⚠️ Le backend doit être démarré pour utiliser DECODE.');
+  var err=document.getElementById('loginError');
+  if(err){
+    err.style.display='block';
+    err.style.color='var(--y2)';
+    err.textContent='Lance le backend : node server.js (voir README)';
+  }
 }
 
 // ---- LAUNCH APP ----
@@ -1379,24 +1527,27 @@ function startApp(){launchApp();}
 // ---- SYNC SERVEUR ----
 async function syncFromServer(){
   try{
-    var res=await apiCall('/users/me','GET');
+    var res=await fetch(BACKEND_URL+'/users/me',{headers:authHeaders()});
     if(res.ok){
       var data=await res.json();
       var u=data.data;
       if(u.xp>gs.xp)gs.xp=u.xp;
       if(u.streak>gs.streak)gs.streak=u.streak;
       if(u.badges&&u.badges.length>(gs.badges||[]).length)gs.badges=u.badges;
+      if(CURRENT_USER)CURRENT_USER=Object.assign(CURRENT_USER,u);
+      var sbName=document.getElementById('sbUsername');
+      if(sbName&&u.username)sbName.textContent=u.username;
       save();updateGameBar();
     }
   }catch(e){}
 }
 
 async function syncToServer(){
-  if(IS_OFFLINE||!ACCESS_TOKEN)return;
+  if(!ACCESS_TOKEN)return;
   try{
-    await apiCall('/decode/sync','POST',{
-      xp:gs.xp,streak:gs.streak,badges:gs.badges||[],
-      concepts_decoded:searchHistory.length
+    await fetch(BACKEND_URL+'/decode/sync',{
+      method:'POST',headers:authHeaders(),
+      body:JSON.stringify({xp:gs.xp,streak:gs.streak,badges:gs.badges||[],concepts_decoded:searchHistory.length})
     });
   }catch(e){}
 }
@@ -1433,6 +1584,11 @@ function initApp(){
   setLevel(currentLevel);setCorrLevel(corrLevel);setCoursLevel(coursLevel);
   renderSuggs();updateGameBar();renderBadges();renderHistory();renderQuizIntro();
   initAmiChat();renderFriends();renderLeaderboard('global');renderCours();
+  // Charger les amis et les notifications depuis le backend
+  if(ACCESS_TOKEN){
+    loadFriendsFromBackend();
+    loadNotificationsFromBackend();
+  }
   updateStreak();
   // Mettre à jour la sidebar avec le nom/avatar de l'utilisateur
   var sbName=document.getElementById('sbUsername');
@@ -1493,6 +1649,7 @@ function goTo(name,el){
   if(name==='ami')scrollAmiBottom();
   if(name==='social'){renderFriends();renderLeaderboard(lbTab);}
   if(name==='cours')renderCours();
+  if(name==='bibliotheque')chargerBibliothequePublique(1);
 }
 
 // ===== SEARCH =====
@@ -1562,6 +1719,32 @@ function checkBadges(){
   renderBadges();
   document.getElementById('badgesDisplay').textContent=(gs.badges||[]).length;
 }
+
+// ── renderHistory ──
+function renderHistory(){
+  var hs=document.getElementById('historySection');
+  var hi=document.getElementById('historyItems');
+  if(!hs||!hi)return;
+  if(!searchHistory.length){hs.style.display='none';return;}
+  hs.style.display='block';
+  hi.innerHTML=searchHistory.map(function(h){
+    var color=DOMAIN_COLORS[h.domaine]||'#7c6af5';
+    var safe=h.terme.replace(/'/g,"\'");
+    return'<div class="h-chip" onclick="quickSearch(\''+safe+'\')"><div class="h-dot" style="background:'+color+'"></div>'+esc(h.terme)+'</div>';
+  }).join('');
+  document.getElementById('conceptsDisplay').textContent=searchHistory.length;
+}
+
+// ── renderQuizIntro ──
+function renderQuizIntro(){
+  var c=document.getElementById('quizContent');if(!c)return;
+  if(!searchHistory.length){
+    c.innerHTML='<div class="quiz-intro"><div class="quiz-intro-t">Le quiz t\'attend !</div><div class="quiz-intro-s">Explore des concepts dans Décoder pour débloquer le quiz</div></div>';
+    return;
+  }
+  c.innerHTML='<div class="quiz-intro"><div class="quiz-intro-t">Teste tes connaissances</div><div class="quiz-intro-s">'+searchHistory.length+' concept(s) · +10 XP par bonne réponse</div><button class="quiz-start" onclick="startQuiz()">COMMENCER →</button></div>';
+}
+
 function renderBadges(){
   var g=document.getElementById('badgesGrid');if(!g)return;
   if(!gs.badges)gs.badges=[];
@@ -1635,25 +1818,36 @@ function buildDCtxPrompt(){if(!decodeCtx.length)return'';return'\n\nCONTEXTE SES
 function buildQCtxPrompt(){if(!questionCtx.length)return'';return'\n\nFIL CONVERSATION : '+questionCtx.slice(0,3).reverse().map(function(q){return'"'+q+'"';}).join(' → ')+'. La nouvelle question est peut-être une suite.';}
 
 // ===== API v11 — Proxy Backend (clé sécurisée côté serveur) =====
-function callGroq(prompt,cb,maxTok){
-  if(IS_OFFLINE||!ACCESS_TOKEN){
-    // Mode hors-ligne : appel direct Groq avec la clé locale
-    fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+API_KEY},body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.7,max_tokens:maxTok||1600,messages:[{role:'user',content:prompt}]})}).then(function(r){return r.json();}).then(function(data){if(data.error)throw new Error(data.error.message||'Erreur API');var txt=data.choices&&data.choices[0]&&data.choices[0].message?data.choices[0].message.content:'';cb(null,txt);}).catch(function(err){cb(err,null);});
+// callGroq — proxy backend avec cache intelligent
+// cacheInfo = { type: 'decode|question|quiz|...', input: 'terme', level: 'lycee' }
+function callGroq(prompt,cb,maxTok,cacheInfo){
+  if(!ACCESS_TOKEN){
+    cb(new Error('Non connecté. Connecte-toi pour utiliser les fonctions IA.'),null);
     return;
   }
-  // Mode connecté : passer par le backend (clé protégée)
-  fetch(BACKEND_URL+'/decode/_groq-proxy',{method:'POST',headers:authHeaders(),body:JSON.stringify({prompt:prompt,max_tokens:maxTok||1600})}).then(function(r){
-    if(r.status===401){IS_OFFLINE=true;callGroq(prompt,cb,maxTok);return null;}
+  var body={prompt:prompt,max_tokens:maxTok||1600};
+  if(cacheInfo&&cacheInfo.type){
+    body.cache_type=cacheInfo.type;
+    body.cache_input=cacheInfo.input;
+    body.cache_level=cacheInfo.level||currentLevel;
+  }
+  fetch(BACKEND_URL+'/decode/_groq-proxy',{
+    method:'POST',headers:authHeaders(),body:JSON.stringify(body)
+  }).then(function(r){
+    if(r.status===401){
+      tryRefreshToken().then(function(ok){
+        if(ok) callGroq(prompt,cb,maxTok,cacheInfo);
+        else cb(new Error('Session expirée. Reconnecte-toi.'),null);
+      });
+      return null;
+    }
     return r.json();
   }).then(function(data){
     if(!data)return;
-    if(!data.success)throw new Error(data.error||'Erreur backend');
+    if(!data.success)throw new Error(data.error||'Erreur serveur');
+    if(data.fromCache)console.log('Cache hit pour:',cacheInfo&&cacheInfo.input);
     cb(null,data.text);
-  }).catch(function(err){
-    // Fallback offline si backend KO
-    if(API_KEY&&API_KEY.length>10){IS_OFFLINE=true;callGroq(prompt,cb,maxTok);}
-    else cb(err,null);
-  });
+  }).catch(function(err){ cb(err,null); });
 }
 
 // ===== DECODE =====
@@ -1668,7 +1862,7 @@ function runDecode(){
     if(err){document.getElementById('decodeContent').innerHTML='<div class="err-box">Erreur : '+esc(err.message)+'</div>';return;}
     try{var clean=txt.replace(/```json/g,'').replace(/```/g,'').trim();var r=JSON.parse(clean);document.getElementById('decodeContent').innerHTML='<div class="res-layout">'+renderTiktok(r)+'<div>'+renderClassic(r)+'</div></div>';addToHistory(r);addDCtx(r.terme||raw);addXP(20,'Concept décodé !');if(searchHistory.length===1)confetti();}
     catch(e){document.getElementById('decodeContent').innerHTML='<div class="err-box">Erreur de parsing. Réessaie.</div>';}
-  });
+  },{type:'decode',input:raw,level:currentLevel});
 }
 
 // ===== QUESTION =====
@@ -1686,7 +1880,7 @@ function runQuestion(){
     if(r.conclusion)h+='<div class="rc-sec"><div class="sec-lbl"><span>✦</span>Conclusion</div><div style="font-size:13px;color:var(--ink2);line-height:1.75;font-style:italic;border-left:3px solid var(--y);padding-left:13px;">'+esc(r.conclusion)+'</div></div>';
     h+='</div>';document.getElementById('questionContent').innerHTML=h;addXP(15,'Question répondue !');}
     catch(e){document.getElementById('questionContent').innerHTML='<div class="err-box">Erreur de parsing. Réessaie.</div>';}
-  });
+  },{type:'question',input:raw,level:currentLevel});
 }
 
 // ===== CORRECTEUR =====
@@ -1750,23 +1944,18 @@ function sendAmiMsg(){
   document.getElementById('amiQuickReplies').innerHTML='';
   var tid='t'+Date.now();msgs.innerHTML+='<div class="msg ai" id="'+tid+'"><div class="msg-av ai">🤗</div><div class="msg-bubble typing-bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>';scrollAmiBottom();
   var conv=[{role:'system',content:AMI_SYS}];amiHistory.slice(-12).forEach(function(m){conv.push({role:m.role==='ai'?'assistant':'user',content:m.text});});
-  var amiEndpoint=IS_OFFLINE||!ACCESS_TOKEN
-    ?'https://api.groq.com/openai/v1/chat/completions'
-    :BACKEND_URL+'/decode/ami';
-  var amiHeaders=IS_OFFLINE||!ACCESS_TOKEN
-    ?{'Content-Type':'application/json','Authorization':'Bearer '+API_KEY}
-    :authHeaders();
-  var amiBody=IS_OFFLINE||!ACCESS_TOKEN
-    ?JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.85,max_tokens:500,messages:conv})
-    :JSON.stringify({message:txt,history:amiHistory.slice(-12)});
-  fetch(amiEndpoint,{method:'POST',headers:amiHeaders,body:amiBody}).then(function(r){return r.json();}).then(function(data){
-    // Normaliser la réponse (backend ou Groq direct)
-    data._reply=data.reply||(data.choices&&data.choices[0]&&data.choices[0].message?data.choices[0].message.content:'');
-    return data;
-  })
-  .then(function(data){
-    if(data.error&&!data._reply)throw new Error(typeof data.error==='object'?data.error.message:data.error);
-    var reply=data._reply||'Désolé, réessaie ! 😅';
+  if(!ACCESS_TOKEN){
+    var te2=document.getElementById(tid);if(te2)te2.parentNode.removeChild(te2);
+    var aMsg2={role:'ai',text:'Connecte-toi pour discuter avec Alex ! 💜',time:now()};
+    amiHistory.push(aMsg2);msgs.innerHTML+=renderMsg(aMsg2);scrollAmiBottom();
+    send.disabled=false;return;
+  }
+  fetch(BACKEND_URL+'/decode/ami',{
+    method:'POST',headers:authHeaders(),
+    body:JSON.stringify({message:txt,history:amiHistory.slice(-12)})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(!data.success&&data.error)throw new Error(data.error);
+    var reply=data.reply||'Désolé, réessaie ! 😅';
     var te=document.getElementById(tid);if(te)te.parentNode.removeChild(te);
     var aMsg={role:'ai',text:reply,time:now()};amiHistory.push(aMsg);msgs.innerHTML+=renderMsg(aMsg);scrollAmiBottom();
     gs.amiMsgs=(gs.amiMsgs||0)+1;checkBadges();save();addXP(3,'');
@@ -1851,19 +2040,82 @@ function openCours(c){
 function printCours(){window.print();}
 
 // ===== SOCIAL (SIMULATED) =====
-function addFriend(){
+// ── Ajouter un ami par email (backend réel) ──
+async function addFriend(){
   var inp=document.getElementById('friendEmail');var email=inp.value.trim();
   if(!email||!email.includes('@')){showToast('Entre une adresse email valide !');return;}
-  if(friends.find(function(f){return f.email===email;})){showToast('Cet ami est déjà ajouté !');return;}
-  var names=['Alex','Sam','Jordan','Casey','Morgan','Riley','Taylor'];
-  var n=names[Math.floor(Math.random()*names.length)];
-  var avatars=['👨‍💻','👩‍🎓','🧑‍🔬','👨‍🎨','👩‍💼','🧑‍🎭','👨‍🏫'];
-  var colors=['linear-gradient(135deg,#7c6af5,#a78bfa)','linear-gradient(135deg,#10d9a0,#0fa870)','linear-gradient(135deg,#f5c842,#f57c32)','linear-gradient(135deg,#3d8ef5,#7c6af5)','linear-gradient(135deg,#f5416a,#f57c32)'];
-  var xp=Math.floor(Math.random()*800)+100;
-  var lvl=Math.min(8,Math.floor(xp/180)+1);
-  friends.push({email:email,name:n,avatar:avatars[Math.floor(Math.random()*avatars.length)],color:colors[Math.floor(Math.random()*colors.length)],xp:xp,level:lvl,online:Math.random()>0.4});
-  inp.value='';save();renderFriends();renderLeaderboard(lbTab);checkBadges();addXP(5,'Ami ajouté !');showToast('👥 '+n+' a rejoint ta liste d\'amis !');
+  if(!ACCESS_TOKEN){showToast('Connecte-toi pour ajouter des amis.');return;}
+  inp.disabled=true;
+  try{
+    var res=await fetch(BACKEND_URL+'/friends/request',{method:'POST',headers:authHeaders(),body:JSON.stringify({email:email})});
+    var data=await res.json();
+    if(!res.ok){showToast('\u274C '+(data.error||'Erreur'));inp.disabled=false;return;}
+    showToast('\uD83D\uDC65 '+data.message);
+    inp.value='';inp.disabled=false;
+    addXP(5,'Ami ajouté !');checkBadges();
+    loadFriendsFromBackend();
+  }catch(e){showToast('Erreur réseau');inp.disabled=false;}
 }
+
+async function loadFriendsFromBackend(){
+  if(!ACCESS_TOKEN)return;
+  try{
+    var res=await fetch(BACKEND_URL+'/friends',{headers:authHeaders()});
+    if(!res.ok)return;
+    var data=await res.json();
+    friends=data.data.filter(function(f){return f.status==='accepted';}).map(function(f){
+      return{email:f.email,name:f.username,avatar:f.username.charAt(0).toUpperCase(),
+        color:'linear-gradient(135deg,#7c6af5,#a78bfa)',xp:f.xp,
+        level:Math.min(8,Math.floor((f.xp||0)/180)+1),online:f.online,id:f.id};
+    });
+    var pendingRes=await fetch(BACKEND_URL+'/friends/pending',{headers:authHeaders()});
+    if(pendingRes.ok){
+      var pData=await pendingRes.json();
+      if(pData.count>0)renderPendingRequests(pData.data);
+    }
+    renderFriends();renderLeaderboard(lbTab);
+  }catch(e){}
+}
+
+function renderPendingRequests(pending){
+  var el=document.getElementById('friendsList');if(!el||!pending.length)return;
+  var html='<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:2px;color:var(--y2);text-transform:uppercase;margin-bottom:8px;">Demandes reçues</div>';
+  html+=pending.map(function(p){
+    return'<div class="friend-item" style="border-left:3px solid var(--y);">'
+      +'<div class="fi-avatar" style="background:linear-gradient(135deg,var(--y),var(--o));">'+esc(p.username.charAt(0))+'</div>'
+      +'<div><div class="fi-name">'+esc(p.username)+'</div><div class="fi-lvl">Demande d\'ami</div></div>'
+      +'<button class="fi-challenge" style="background:var(--g);color:#000;margin-right:4px;" onclick="respondFriend(\''+p.id+'\',\'accept\')">✓</button>'
+      +'<button class="fi-challenge" style="background:var(--bg3);color:var(--r);" onclick="respondFriend(\''+p.id+'\',\'decline\')">✗</button>'
+      +'</div>';
+  }).join('');
+  html+='<hr style="border-color:var(--border);margin:12px 0;">';
+  el.insertAdjacentHTML('afterbegin',html);
+}
+
+async function respondFriend(friendId,action){
+  if(!ACCESS_TOKEN)return;
+  try{
+    var res=await fetch(BACKEND_URL+'/friends/'+friendId+'/respond',{method:'PATCH',headers:authHeaders(),body:JSON.stringify({action:action})});
+    var data=await res.json();showToast(data.message||'OK');
+    loadFriendsFromBackend();
+  }catch(e){showToast('Erreur réseau');}
+}
+
+async function loadNotificationsFromBackend(){
+  if(!ACCESS_TOKEN)return;
+  try{
+    var res=await fetch(BACKEND_URL+'/notifications',{headers:authHeaders()});
+    if(!res.ok)return;
+    var data=await res.json();
+    var badge=document.getElementById('notifBadge');
+    if(badge)badge.style.display=data.unread>0?'block':'none';
+    if(data.unread>0){
+      showToast('\uD83D\uDD14 '+data.unread+' nouvelle(s) notification(s)');
+    }
+  }catch(e){}
+}
+
+
 function renderFriends(){
   var el=document.getElementById('friendsList');if(!el)return;
   if(!friends.length){el.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--ink4);">Aucun ami pour l\'instant — ajoute-en via leur email !</div>';return;}
@@ -1878,202 +2130,32 @@ function renderFriends(){
   }).join('');
 }
 function switchLbTab(tab,btn){lbTab=tab;document.querySelectorAll('.lb-tab').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');renderLeaderboard(tab);}
-function renderLeaderboard(tab){
+async function renderLeaderboard(tab){
+  lbTab=tab;
   var el=document.getElementById('leaderboardList');if(!el)return;
-  var data;
-  if(tab==='global'){
-    var myEntry={n:'Toi',lvl:gs.level||1,xp:gs.xp||0,av:'😊',color:'linear-gradient(135deg,var(--p),var(--g))',isMe:true};
-    var combined=[...FAKE_GLOBAL,myEntry].sort(function(a,b){return b.xp-a.xp;});
-    data=combined;
-  } else {
-    var myE={n:'Toi',lvl:gs.level||1,xp:gs.xp||0,av:'😊',color:'linear-gradient(135deg,var(--p),var(--g))',isMe:true};
-    data=[myE,...friends.map(function(f){return{n:f.name,lvl:f.level,xp:f.xp,av:f.avatar,color:f.color};})].sort(function(a,b){return b.xp-a.xp;});
-  }
-  if(!data.length){el.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--ink4);">Ajoute des amis pour voir leur classement !</div>';return;}
-  var rankColors=['gold','silver','bronze'];
-  el.innerHTML=data.slice(0,10).map(function(p,i){
-    var rc=i<3?rankColors[i]:'other';
+  if(!ACCESS_TOKEN){el.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--ink4);">Connecte-toi pour voir le classement.</div>';return;}
+  try{
+    var url=tab==='friends'?BACKEND_URL+'/friends':BACKEND_URL+'/users/leaderboard';
+    var res=await fetch(url,{headers:authHeaders()});
+    if(!res.ok)return;
+    var data=await res.json();
+    var list=data.data||[];
+    if(!list.length){el.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--ink4);">'+(tab==='friends'?'Aucun ami encore.':'Aucun utilisateur.')+'</div>';return;}
+    var rankColors=['gold','silver','bronze'];
     var medals=['🥇','🥈','🥉'];
-    var medal=i<3?medals[i]:(i+1);
-    return'<div class="lb-item'+(p.isMe?' me':'')+'"><div class="lb-rank '+rc+'">'+(i<3?'<span style="font-size:16px;">'+medal+'</span>':medal)+'</div><div class="lb-avatar" style="background:'+p.color+';">'+p.av+'</div><div><div class="lb-name">'+esc(p.n)+'</div><div class="lb-badge">Niv.'+p.lvl+'</div></div><div class="lb-score">'+p.xp+' <span style="font-size:10px;color:var(--ink4);">XP</span></div></div>';
-  }).join('');
+    el.innerHTML=list.slice(0,10).map(function(p,i){
+      var rc=i<3?rankColors[i]:'other';
+      var medal=i<3?('<span style="font-size:16px;">'+medals[i]+'</span>'):(p.rank||i+1);
+      var av=(p.username||p.name||'?').charAt(0).toUpperCase();
+      var col='linear-gradient(135deg,#7c6af5,#a78bfa)';
+      var isMe=p.isMe||false;
+      return'<div class="lb-item'+(isMe?' me':'')+'">'
+        +'<div class="lb-rank '+rc+'">'+medal+'</div>'
+        +'<div class="lb-avatar" style="background:'+col+';">'+av+'</div>'
+        +'<div><div class="lb-name">'+esc(p.username||p.name||'?')+(p.online?'<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--g);margin-left:6px;vertical-align:middle;"></span>':'')+'</div>'
+        +'<div class="lb-badge">Niv.'+Math.min(8,Math.floor((p.xp||0)/180)+1)+'</div></div>'
+        +'<div class="lb-score">'+(p.xp||0)+' <span style="font-size:10px;color:var(--ink4);">XP</span></div>'
+        +'</div>';
+    }).join('');
+  }catch(e){el.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--r2);">Erreur de chargement.</div>';}
 }
-
-// ===== OPPOSITION =====
-function fillOpp(a,b){document.getElementById('oppInput1').value=a;document.getElementById('oppInput2').value=b;}
-function runOpposition(){
-  var a=document.getElementById('oppInput1').value.trim();var b=document.getElementById('oppInput2').value.trim();if(!a||!b){showToast('Entre deux concepts !');return;}
-  var btn=document.getElementById('oppBtn');btn.disabled=true;btn.textContent='Analyse...';
-  document.getElementById('oppositionContent').innerHTML='<div class="loading" style="padding:30px;"><div class="spinner"></div><div class="load-t">Analyse dialectique...</div></div>';
-  var prompt=LEVEL_CONFIG[currentLevel].prompt+'\n\nAnalyse l\'opposition entre "'+a+'" et "'+b+'".\nRéponds UNIQUEMENT en JSON valide :\n{"concept_a":"'+a+'","concept_b":"'+b+'","couleur_a":"#f5416a","couleur_b":"#3d8ef5","sous_titre_a":"","sous_titre_b":"","differences_a":["","","",""],"differences_b":["","","",""],"similitudes":["","",""],"verdict":""}';
-  callGroq(prompt,function(err,txt){
-    btn.disabled=false;btn.textContent='⚔️ ANALYSER L\'OPPOSITION';
-    if(err){document.getElementById('oppositionContent').innerHTML='<div class="err-box">Erreur : '+esc(err.message)+'</div>';return;}
-    try{var clean=txt.replace(/```json/g,'').replace(/```/g,'').trim();var r=JSON.parse(clean);document.getElementById('oppositionContent').innerHTML=renderOpp(r);gs.oppDone=(gs.oppDone||0)+1;checkBadges();save();addXP(25,'Opposition analysée !');}
-    catch(e){document.getElementById('oppositionContent').innerHTML='<div class="err-box">Erreur parsing.</div>';}
-  });
-}
-function renderOpp(r){
-  var cA=r.couleur_a||'#f5416a',cB=r.couleur_b||'#3d8ef5';
-  var h='<div class="opp-result-inner"><div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;margin-bottom:16px;">'
-    +'<div style="text-align:center;"><div style="background:'+cA+';color:#fff;padding:8px 14px;border-radius:var(--r-sm);font-family:\'Syne\',sans-serif;font-size:16px;font-weight:800;">'+esc(r.concept_a||'')+'</div>'+(r.sous_titre_a?'<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:var(--ink4);margin-top:5px;">'+esc(r.sous_titre_a)+'</div>':'')+'</div>'
-    +'<div style="display:flex;align-items:center;justify-content:center;font-family:\'Syne\',sans-serif;font-size:18px;font-weight:800;color:var(--ink4);">VS</div>'
-    +'<div style="text-align:center;"><div style="background:'+cB+';color:#fff;padding:8px 14px;border-radius:var(--r-sm);font-family:\'Syne\',sans-serif;font-size:16px;font-weight:800;">'+esc(r.concept_b||'')+'</div>'+(r.sous_titre_b?'<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:var(--ink4);margin-top:5px;">'+esc(r.sous_titre_b)+'</div>':'')+'</div>'
-    +'</div><div class="opp-cols"><div class="opp-col-items">';
-  (r.differences_a||[]).filter(function(d){return d;}).forEach(function(d){h+='<div class="opp-col-item" style="border-left:3px solid '+cA+';">'+esc(d)+'</div>';});
-  h+='</div><div class="opp-div"><div class="opp-div-line"></div><div style="font-size:16px;">⚔️</div><div class="opp-div-line"></div></div><div class="opp-col-items">';
-  (r.differences_b||[]).filter(function(d){return d;}).forEach(function(d){h+='<div class="opp-col-item" style="border-left:3px solid '+cB+';">'+esc(d)+'</div>';});
-  h+='</div></div>';
-  if(r.similitudes&&r.similitudes.filter(function(s){return s;}).length){h+='<div class="opp-sim-sec"><div class="opp-sim-t">🤝 Points communs</div><div style="display:flex;flex-wrap:wrap;gap:6px;">'+r.similitudes.filter(function(s){return s;}).map(function(s){return'<div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:5px 12px;font-size:12px;color:var(--ink2);">'+esc(s)+'</div>';}).join('')+'</div></div>';}
-  if(r.verdict)h+='<div class="opp-verdict-box"><div class="opp-verdict-lbl">⚖️ Verdict</div><div class="opp-verdict-txt">'+esc(r.verdict)+'</div></div>';
-  h+='</div>';return h;
-}
-
-// ===== NEWS =====
-function selNewsCat(cat,btn){newsCat=cat;document.querySelectorAll('.ncat').forEach(function(p){p.classList.remove('on');});btn.classList.add('on');loadNews(true);}
-function loadNews(force){
-  var el=document.getElementById('newsContent');if(!el)return;
-  if(!force&&newsCache[newsCat]){renderNews(newsCache[newsCat]);return;}
-  el.innerHTML='<div class="loading"><div class="spinner"></div><div class="load-t">Chargement...</div><div class="load-s">'+newsCat.toUpperCase()+' · IA</div></div>';
-  var catInfo={monde:'actualité internationale générale, géopolitique',politique:'politique française et mondiale, élections, réformes',sciences:'découvertes scientifiques, médecine, astronomie',tech:'intelligence artificielle, startups, cybersécurité',economie:'marchés, inflation, croissance',culture:'art, littérature, cinéma, musique'};
-  var today=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
-  var prompt='Génère 6 actualités représentatives de '+today+' dans la catégorie "'+newsCat+'" ('+catInfo[newsCat]+').\nRéponds UNIQUEMENT en JSON valide :\n{"news":[{"titre":"","resume":"","categorie":"'+newsCat+'","source":"","importance":"haute|normale","concept_lie":"","analyse_courte":"","mots_cles":["",""]}]}';
-  callGroq(prompt,function(err,txt){if(err){el.innerHTML='<div class="err-box">Erreur : '+esc(err.message)+'</div>';return;}try{var clean=txt.replace(/```json/g,'').replace(/```/g,'').trim();var r=JSON.parse(clean);newsCache[newsCat]=r.news||[];renderNews(newsCache[newsCat]);}catch(e){el.innerHTML='<div class="err-box">Erreur parsing.</div>';}});
-}
-function renderNews(news){
-  var el=document.getElementById('newsContent');if(!el)return;
-  var catColors={politique:'#f5416a',sciences:'#3d8ef5',tech:'#a855f7',economie:'#f5c842',culture:'#10d9a0',monde:'#7c6af5'};
-  var catEmoji={politique:'⚖️',sciences:'🔬',tech:'💻',economie:'📈',culture:'🎭',monde:'🌍'};
-  var today=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long'});
-  var h='<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><div class="nlive"><span class="ldot"></span>EN DIRECT</div><span style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:var(--ink4);">'+today+'</span></div><div class="news-grid">';
-  news.forEach(function(n,i){var col=catColors[n.categorie]||'#7c6af5';var emoji=catEmoji[n.categorie]||'📰';
-    h+='<div class="ncard" onclick="openNewsDetail('+i+')">'
-      +'<div class="ncard-top">'+(n.importance==='haute'?'<div class="nlive" style="background:'+col+';"><span class="ldot"></span>IMPORTANT</div>':'')
-      +'<div class="ncat-tag" style="background:'+col+';">'+emoji+' '+esc(n.categorie)+'</div>'
-      +'<div class="ncard-title">'+esc(n.titre||'')+'</div>'
-      +'<div class="ncard-sum">'+esc(n.resume||'')+'</div></div>'
-      +'<div class="ncard-bot"><span class="ncard-src">'+esc(n.source||'')+'</span><span class="ncard-cta">Lire +</span></div></div>';
-  });
-  h+='</div>';el.innerHTML=h;window._cNews=news;
-}
-function openNewsDetail(idx){var news=window._cNews;if(!news||!news[idx])return;var n=news[idx];var modal=document.getElementById('newsDetailModal');var catColors={politique:'#f5416a',sciences:'#3d8ef5',tech:'#a855f7',economie:'#f5c842',culture:'#10d9a0',monde:'#7c6af5'};var col=catColors[n.categorie]||'#7c6af5';
-  var h='<div class="ndm-ctn"><div class="ndm-hd"><div><div class="ncat-tag" style="background:'+col+';display:inline-block;font-family:\'JetBrains Mono\',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:8px;color:#fff;">'+esc(n.categorie)+'</div><div class="ndm-ttl">'+esc(n.titre||'')+'</div></div><button class="modal-close" onclick="document.getElementById(\'newsDetailModal\').style.display=\'none\'">✕</button></div>'
-    +'<div class="ndm-body"><div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;"><span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:\'JetBrains Mono\',monospace;font-size:9px;color:var(--ink4);">'+esc(n.source||'')+'</span>'
-    +(n.mots_cles||[]).map(function(m){return m?'<span style="background:rgba(124,106,245,0.1);border:1px solid rgba(124,106,245,0.25);border-radius:4px;padding:3px 9px;font-family:\'JetBrains Mono\',monospace;font-size:9px;color:var(--p2);">'+esc(m)+'</span>':'';}).join('')+'</div>'
-    +'<div class="ndm-analysis"><p><strong>'+esc(n.resume||'')+'</strong></p>'+(n.analyse_courte?'<p style="color:var(--ink4);font-style:italic;">'+esc(n.analyse_courte)+'</p>':'')+'</div>';
-  if(n.concept_lie){var safeC=n.concept_lie.replace(/'/g,"\\'");h+='<div class="ndm-learn"><div class="ndm-learn-t">💡 Concept lié</div><div style="font-size:13px;color:var(--ink2);">Approfondis : <strong>'+esc(n.concept_lie)+'</strong></div><button class="ndm-decode-btn" onclick="decodeFromNews(\''+safeC+'\')">🔍 Décoder →</button></div>';}
-  h+='</div></div>';modal.innerHTML=h;modal.style.display='flex';modal.onclick=function(e){if(e.target===modal)modal.style.display='none';};gs.newsRead=(gs.newsRead||0)+1;checkBadges();save();addXP(5,'Article lu !');
-}
-function decodeFromNews(concept){document.getElementById('newsDetailModal').style.display='none';document.getElementById('decodeInput').value=concept;goTo('decode',document.getElementById('nav-decode'));runDecode();}
-
-// ===== FICHE =====
-function showFiche(r){
-  var domColor=DOMAIN_COLORS[r.domaine]||'#7c6af5';var modal=document.getElementById('ficheModal');
-  var h='<div class="fiche-ctn"><div class="fiche-hd"><div><span class="fiche-badge" style="background:'+domColor+';">Fiche</span><span class="fiche-trm">'+esc(r.terme||'')+'</span></div><button class="modal-close" onclick="document.getElementById(\'ficheModal\').style.display=\'none\'">✕</button></div>'
-    +'<div class="fiche-bd"><div class="fiche-grid"><div class="fiche-g-card"><span class="fgc-ico">💡</span><div class="fgc-lbl">Définition</div><div class="fgc-txt">'+esc(r.definition_simple||'')+'</div></div><div class="fiche-g-card"><span class="fgc-ico">🔄</span><div class="fgc-lbl">Analogie clé</div><div class="fgc-txt">'+esc(r.analogie||'—')+'</div></div><div class="fiche-g-card"><span class="fgc-ico">🏛️</span><div class="fgc-lbl">Contexte</div><div class="fgc-txt">'+(r.contexte_historique&&r.contexte_historique.texte?esc(r.contexte_historique.texte.split('.')[0]+'.'):esc(r.origine||'—'))+'</div></div><div class="fiche-g-card"><span class="fgc-ico">💼</span><div class="fgc-lbl">Exemple</div><div class="fgc-txt">'+(r.exemple_concret&&r.exemple_concret.situation?esc(r.exemple_concret.situation):'—')+'</div></div></div>';
-  if(r.points_cles&&r.points_cles.filter(function(p){return p;}).length){h+='<div style="margin-bottom:20px;"><div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;">À retenir</div>';r.points_cles.filter(function(p){return p;}).forEach(function(p,i){h+='<div class="fiche-pt"><div class="fiche-pt-n">0'+(i+1)+'</div><div class="fiche-pt-t">'+esc(p)+'</div></div>';});h+='</div>';}
-  if(r.citation&&r.citation.texte&&r.citation.auteur)h+='<div style="border-left:3px solid var(--y);padding-left:14px;margin-top:16px;"><div style="font-family:\'Syne\',sans-serif;font-size:14px;font-style:italic;color:var(--ink2);line-height:1.7;margin-bottom:4px;">« '+esc(r.citation.texte)+' »</div><div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:var(--ink4);">— '+esc(r.citation.auteur)+'</div></div>';
-  h+='<div class="fiche-foot"><button class="fiche-dl" onclick="window.print()">🖨️ Imprimer</button></div></div></div>';
-  modal.innerHTML=h;modal.style.display='flex';modal.onclick=function(e){if(e.target===modal)modal.style.display='none';};gs.ficheDone=(gs.ficheDone||0)+1;checkBadges();save();addXP(10,'Fiche générée !');
-}
-function showFicheFromCard(btn){var card=btn.closest('.res-card');var termEl=card?card.querySelector('.rc-term'):null;var term=termEl?termEl.textContent:'';if(window._lr&&window._lr[term])showFiche(window._lr[term]);}
-function oppFromCard(term){document.getElementById('oppInput1').value=term;goTo('opposition',document.getElementById('nav-opposition'));document.getElementById('oppInput2').focus();}
-
-// ===== TIKTOK =====
-function buildSlides(r){var dE={politique:'⚖️',droit:'📜',histoire:'🏛️',culture:'🎭',economie:'📈',philosophie:'💭',sciences:'🔬'};var slides=[{emoji:dE[r.domaine]||'📚',title:'Le concept',text:r.terme,sub:r.origine||'',big:true},{emoji:'💡',title:'En clair',text:r.definition_simple||'',sub:''},{emoji:'📖',title:'L\'essentiel',text:r.explication?(r.explication.split('.')[0]+'.'):'' ,sub:''},{emoji:'🔄',title:'L\'analogie',text:r.analogie||'',sub:''}];if(r.contexte_historique&&r.contexte_historique.texte)slides.push({emoji:'🏛️',title:r.contexte_historique.date_cle||'Contexte',text:r.contexte_historique.texte.split('.')[0]+'.',sub:''});if(r.points_cles)r.points_cles.slice(0,2).forEach(function(p,i){if(p)slides.push({emoji:'0'+(i+1),title:'À retenir',text:p,sub:'',isNum:true});});if(r.a_savoir)slides.push({emoji:'✨',title:'Le savais-tu ?',text:r.a_savoir,sub:''});slides.push({emoji:'🎯',title:'DECODE',text:'Tu maîtrises '+r.terme,sub:'Kayssar × Claude AI · 2026',big:true});return slides.filter(function(s){return s.text&&s.text.trim();});}
-function renderTiktok(r){tkSlides=buildSlides(r);tkCur=0;tkPlaying=false;clearInterval(tkTimer);var prog=tkSlides.map(function(_,i){return'<div class="tk-seg"><div class="tk-seg-fill" id="pf'+i+'"></div></div>';}).join('');var sls=tkSlides.map(function(s,j){var pal=SLIDE_PALETTES[j%SLIDE_PALETTES.length];var eH=s.isNum?'<div style="font-family:\'Syne\',sans-serif;font-size:48px;font-weight:800;color:rgba(255,255,255,0.9);margin-bottom:10px;">'+esc(s.emoji)+'</div>':'<div class="slide-emoji">'+esc(s.emoji)+'</div>';var txt=s.text.length>95?s.text.substring(0,92)+'…':esc(s.text);return'<div class="tk-slide'+(j===0?' active':'')+'" id="sl'+j+'" style="background:linear-gradient(160deg,'+pal[0]+','+pal[1]+');">'+eH+'<div class="slide-ttl">'+esc(s.title)+'</div><div class="slide-txt'+(s.big?' big':'')+'">'+txt+'</div>'+(s.sub?'<div class="slide-sub-txt">'+esc(s.sub)+'</div>':'')+'<div class="slide-tag">#DECODE</div></div>';}).join('');return'<div class="tk-wrap"><div class="tk-phone"><div class="tk-prog">'+prog+'</div>'+sls+'<div class="tk-counter" id="slideCounter">1/'+tkSlides.length+'</div><div class="tk-ctrls"><button class="tk-c" onclick="tkPrev()">‹</button><button class="tk-c play" id="playBtn" onclick="tkToggle()">▶</button><button class="tk-c" onclick="tkNext()">›</button></div></div></div>';}
-function tkGoTo(idx){if(idx<0||idx>=tkSlides.length)return;var prev=document.getElementById('sl'+tkCur);if(prev)prev.classList.remove('active');var pf=document.getElementById('pf'+tkCur);if(pf){pf.style.transition='none';pf.style.width=idx>tkCur?'100%':'0%';}tkCur=idx;var cur=document.getElementById('sl'+tkCur);if(cur)cur.classList.add('active');var c=document.getElementById('slideCounter');if(c)c.textContent=(tkCur+1)+'/'+tkSlides.length;if(tkPlaying)startProg();}
-function tkNext(){clearInterval(tkTimer);var pf=document.getElementById('pf'+tkCur);if(pf){pf.style.transition='none';pf.style.width='100%';}if(tkCur<tkSlides.length-1)tkGoTo(tkCur+1);else{tkPlaying=false;var pb=document.getElementById('playBtn');if(pb)pb.textContent='▶';}}
-function tkPrev(){clearInterval(tkTimer);var pf=document.getElementById('pf'+tkCur);if(pf){pf.style.transition='none';pf.style.width='0%';}if(tkCur>0)tkGoTo(tkCur-1);}
-function tkToggle(){tkPlaying=!tkPlaying;var pb=document.getElementById('playBtn');if(pb)pb.textContent=tkPlaying?'⏸':'▶';if(tkPlaying){if(tkCur>=tkSlides.length-1)tkGoTo(0);startProg();tkTimer=setInterval(function(){tkNext();},SLIDE_DUR);}else{clearInterval(tkTimer);}}
-function startProg(){var pf=document.getElementById('pf'+tkCur);if(!pf)return;pf.style.transition='none';pf.style.width='0%';setTimeout(function(){if(pf){pf.style.transition='width '+SLIDE_DUR+'ms linear';pf.style.width='100%';}},30);}
-
-// ===== RENDER CLASSIC =====
-function renderClassic(r){var domColor=DOMAIN_COLORS[r.domaine]||'#7c6af5';var domLabel=r.domaine?(r.domaine.charAt(0).toUpperCase()+r.domaine.slice(1)):'Général';var lv=LEVEL_CONFIG[currentLevel];
-  var h='<div class="res-card"><div class="rc-lvlbar"><div class="rc-lvldot" style="background:'+lv.color+'"></div><div class="rc-lvltxt" style="color:'+lv.color+'">'+esc(lv.label)+'</div></div><div class="rc-head"><div class="rc-domtag" style="background:'+domColor+'">'+esc(domLabel)+'</div><div class="rc-term">'+esc(r.terme||'')+'</div>';
-  if(r.prononciation)h+='<div class="rc-pron">[ '+esc(r.prononciation)+' ]</div>';if(r.origine)h+='<div class="rc-orig">Origine : '+esc(r.origine)+'</div>';h+='</div>';
-  if(r.definition_simple)h+='<div class="rc-sec"><div class="sec-lbl"><span>💡</span>En clair</div><div class="simple-def">'+esc(r.definition_simple)+'</div></div>';
-  if(r.explication){var ps=r.explication.split(/\n+/).filter(function(p){return p.trim();});h+='<div class="rc-sec"><div class="sec-lbl"><span>📖</span>Explication</div><div class="expl">'+ps.map(function(p){return'<p>'+esc(p)+'</p>';}).join('')+'</div></div>';}
-  if(r.analogie)h+='<div class="rc-sec"><div class="sec-lbl"><span>🔄</span>Analogie</div><div class="analogy-box"><div class="analogy-label">Pour visualiser</div><div class="analogy-txt">'+esc(r.analogie)+'</div></div></div>';
-  if(r.contexte_historique&&r.contexte_historique.texte){h+='<div class="rc-sec"><div class="sec-lbl"><span>🏛️</span>Contexte</div><div class="hist-box">'+(r.contexte_historique.date_cle?'<div class="hist-date">'+esc(r.contexte_historique.date_cle)+'</div>':'')+'<div class="hist-txt">'+esc(r.contexte_historique.texte)+'</div></div></div>';}
-  if(r.points_cles&&r.points_cles.length){h+='<div class="rc-sec"><div class="sec-lbl"><span>🎯</span>À retenir</div><div class="kps">'+r.points_cles.filter(function(p){return p;}).map(function(p,i){return'<div class="kp"><div class="kp-n">0'+(i+1)+'</div><div class="kp-t">'+esc(p)+'</div></div>';}).join('')+'</div></div>';}
-  if(r.exemple_concret&&r.exemple_concret.situation){h+='<div class="rc-sec"><div class="sec-lbl"><span>💼</span>Exemple</div><div class="ex-box"><div class="ex-lbl">Mise en situation</div><div class="ex-txt">'+esc(r.exemple_concret.situation)+'</div>'+(r.exemple_concret.explication?'<div class="ex-break">→ '+esc(r.exemple_concret.explication)+'</div>':'')+'</div></div>';}
-  if(r.citation&&r.citation.texte&&r.citation.auteur)h+='<div class="rc-sec"><div class="sec-lbl"><span>💬</span>Citation</div><div class="quote-box"><div class="quote-txt">« '+esc(r.citation.texte)+' »</div><div class="quote-auth">— '+esc(r.citation.auteur)+'</div></div></div>';
-  if(r.a_savoir)h+='<div class="rc-sec" style="background:rgba(245,200,66,0.04);"><div class="sec-lbl"><span>✨</span>Le savais-tu ?</div><div class="asavoir-txt">'+esc(r.a_savoir)+'</div></div>';
-  h+='<div class="rc-actions"><button class="rc-act" onclick="showFicheFromCard(this)">📋 Fiche</button><button class="rc-act" onclick="oppFromCard(\''+esc(r.terme||'')+'\')">⚔️ Comparer</button></div></div>';
-  if(!window._lr)window._lr={};window._lr[r.terme||'']=r;return h;
-}
-
-// ===== HISTORY =====
-function addToHistory(r){if(!r||!r.terme)return;if(searchHistory.find(function(h){return h.terme.toLowerCase()===r.terme.toLowerCase();}))return;searchHistory.unshift({terme:r.terme,domaine:r.domaine||'',level:currentLevel});if(searchHistory.length>30)searchHistory.pop();renderHistory();save();checkBadges();if(!IS_OFFLINE&&ACCESS_TOKEN)saveDecodeToBackend(r,currentLevel);}
-function renderHistory(){var hs=document.getElementById('historySection');var hi=document.getElementById('historyItems');if(!hs||!hi)return;if(!searchHistory.length){hs.style.display='none';return;}hs.style.display='block';hi.innerHTML=searchHistory.map(function(h){var color=DOMAIN_COLORS[h.domaine]||'#7c6af5';var safe=h.terme.replace(/'/g,"\\'");return'<div class="h-chip" onclick="quickSearch(\''+safe+'\')"><div class="h-dot" style="background:'+color+'"></div>'+esc(h.terme)+'</div>';}).join('');document.getElementById('conceptsDisplay').textContent=searchHistory.length;}
-
-// ===== QUIZ =====
-function renderQuizIntro(){var c=document.getElementById('quizContent');if(!c)return;if(!searchHistory.length){c.innerHTML='<div class="quiz-intro"><div class="quiz-intro-t">Le quiz t\'attend !</div><div class="quiz-intro-s">Explore des concepts dans Décoder pour débloquer le quiz</div></div>';return;}c.innerHTML='<div class="quiz-intro"><div class="quiz-intro-t">Teste tes connaissances</div><div class="quiz-intro-s">'+searchHistory.length+' concept(s) · +10 XP par bonne réponse · Quiz coopératif disponible</div><button class="quiz-start" onclick="startQuiz()">COMMENCER →</button></div>';}
-function startQuiz(){var concepts=searchHistory.slice(0,6).map(function(h){return h.terme;}).join(', ');document.getElementById('quizContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="load-t">Génération du quiz...</div></div>';var prompt=LEVEL_CONFIG[currentLevel].prompt+'\n\nGénère 5 questions de quiz sur : '+concepts+'.\nRéponds UNIQUEMENT en JSON valide :\n{"questions":[{"type":"qcm","question":"","options":["A","B","C","D"],"correct":0,"explication":""},{"type":"vf","question":"","correct":true,"explication":""}]}\nAlterne QCM et VF. 5 questions.';callGroq(prompt,function(err,txt){if(err){document.getElementById('quizContent').innerHTML='<div class="err-box">Erreur : '+esc(err.message)+'</div>';return;}try{var clean=txt.replace(/```json/g,'').replace(/```/g,'').trim();var r=JSON.parse(clean);quizQs=r.questions||[];quizCur=0;quizSc=0;showQuizQ();}catch(e){document.getElementById('quizContent').innerHTML='<div class="err-box">Erreur parsing.</div>';}});}
-function showQuizQ(){if(quizCur>=quizQs.length){showQuizScore();return;}var q=quizQs[quizCur];quizAns=false;var prog=((quizCur/quizQs.length)*100)+'%';var isQCM=q.type==='qcm';var h='<div class="quiz-card"><div class="quiz-prog-bar"><div class="quiz-prog-fill" style="width:'+prog+'"></div></div><div class="quiz-type-badge '+(isQCM?'qtb-qcm':'qtb-vf')+'">'+(isQCM?'QCM':'Vrai / Faux')+'</div><div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:var(--ink4);margin-bottom:10px;">Question '+(quizCur+1)+' / '+quizQs.length+'</div><div class="quiz-q">'+esc(q.question)+'</div><div class="quiz-opts" id="quizOptions">';if(isQCM)(q.options||[]).forEach(function(o,i){h+='<button class="quiz-opt" onclick="answerQCM('+i+')">'+esc(o)+'</button>';});else h+='<button class="quiz-opt" onclick="answerVF(true)">✓ Vrai</button><button class="quiz-opt" onclick="answerVF(false)">✗ Faux</button>';h+='</div><div id="quizFeedback"></div></div>';document.getElementById('quizContent').innerHTML=h;}
-function answerQCM(idx){if(quizAns)return;quizAns=true;var q=quizQs[quizCur];var ok=idx===q.correct;if(ok){quizSc++;addXP(10,'Bonne réponse !');}var opts=document.querySelectorAll('.quiz-opt');opts.forEach(function(o){o.classList.add('answered');o.onclick=null;});opts[idx].classList.add(ok?'correct':'wrong');if(!ok&&opts[q.correct])opts[q.correct].classList.add('show-c');showQuizFb(ok,q.explication);}
-function answerVF(ans){if(quizAns)return;quizAns=true;var q=quizQs[quizCur];var ok=ans===q.correct;if(ok){quizSc++;addXP(10,'Bonne réponse !');}var opts=document.querySelectorAll('.quiz-opt');opts.forEach(function(o){o.classList.add('answered');o.onclick=null;});opts[ans?0:1].classList.add(ok?'correct':'wrong');if(!ok)opts[q.correct?0:1].classList.add('show-c');showQuizFb(ok,q.explication);}
-function showQuizFb(ok,expl){var fb=document.getElementById('quizFeedback');if(!fb)return;fb.innerHTML='<div class="quiz-fb '+(ok?'qf-ok':'qf-ko')+'">'+(ok?'✓ Bonne réponse !':'✗ Mauvaise réponse.')+(expl?' '+esc(expl):'')+'</div><button class="quiz-next" onclick="nextQ()">'+(quizCur+1<quizQs.length?'Suivant →':'Résultats →')+'</button>';}
-function nextQ(){quizCur++;showQuizQ();}
-function showQuizScore(){gs.quizDone=(gs.quizDone||0)+1;checkBadges();save();var pct=Math.round((quizSc/quizQs.length)*100);var msg=pct>=80?'Excellent ! Tu maîtrises ces concepts.':pct>=60?'Bien joué ! Continue à explorer.':'Continue d\'apprendre, tu progresses !';addXP(pct>=80?30:pct>=60?20:10,'Quiz terminé !');document.getElementById('quizContent').innerHTML='<div class="quiz-score-wrap"><div class="quiz-score-n">'+quizSc+'/'+quizQs.length+'</div><div class="quiz-score-lbl">'+pct+'% de réussite</div><div class="quiz-score-msg">'+esc(msg)+'</div><button class="quiz-retry" onclick="startQuiz()">Nouveau quiz →</button></div>';if(pct===100)confetti();}
-
-// ===== INITIALISATION AU CHARGEMENT =====
-// Vérifier le backend au démarrage et toutes les 60 secondes
-setTimeout(checkBackend,2000);
-setInterval(checkBackend,60000);
-
-// Sauvegarder l'historique decode dans le backend
-async function saveDecodeToBackend(result,level){
-  if(IS_OFFLINE||!ACCESS_TOKEN)return;
-  try{
-    await apiCall('/decode/decode','POST',{
-      terme:result.terme,
-      level:level||currentLevel,
-      context:decodeCtx.slice(0,5)
-    });
-  }catch(e){}
-}
-
-// ---- AUTO LOGIN (token stocké) ----
-(function(){
-  try{
-    var savedToken=localStorage.getItem('decode_access_token');
-    var savedUser=localStorage.getItem('decode_user');
-    if(savedToken&&savedUser){
-      ACCESS_TOKEN=savedToken;
-      CURRENT_USER=JSON.parse(savedUser);
-      IS_OFFLINE=false;
-      document.getElementById('setupScreen').style.display='none';
-      document.getElementById('mainApp').style.display='block';
-      loadState();initApp();
-      if(CURRENT_USER){var sbName=document.getElementById('sbUsername');if(sbName)sbName.textContent=CURRENT_USER.username||'Utilisateur';}
-      syncFromServer();
-      return;
-    }
-    // Vérifier token OAuth dans l'URL
-    var urlParams=new URLSearchParams(window.location.search);
-    var oauthToken=urlParams.get('token');
-    if(oauthToken){
-      ACCESS_TOKEN=oauthToken;
-      try{localStorage.setItem('decode_access_token',oauthToken);}catch(e){}
-      window.history.replaceState({},'',window.location.pathname);
-      // Récupérer le profil
-      fetch(BACKEND_URL+'/users/me',{headers:authHeaders()}).then(function(r){return r.json();}).then(function(data){
-        if(data.data){CURRENT_USER=data.data;try{localStorage.setItem('decode_user',JSON.stringify(data.data));}catch(e){}
-          document.getElementById('setupScreen').style.display='none';document.getElementById('mainApp').style.display='block';loadState();initApp();
-          var sbName=document.getElementById('sbUsername');if(sbName)sbName.textContent=CURRENT_USER.username||'Utilisateur';
-          syncFromServer();
-        }
-      }).catch(function(){});
-      return;
-    }
-    // Legacy offline key
-    var s=localStorage.getItem('decode_groq_key10');
-    if(s&&s.length>10){API_KEY=s;IS_OFFLINE=true;CURRENT_USER={username:'Invité',xp:0};document.getElementById('setupScreen').style.display='none';document.getElementById('mainApp').style.display='block';loadState();initApp();}
-  }catch(e){}
-})();
-</script>
-</body>
-</html> 
- 
